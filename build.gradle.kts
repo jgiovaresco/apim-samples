@@ -26,6 +26,11 @@ dependencies {
 
   implementation(libs.bundles.kotlin.coroutines)
   implementation(kotlin("stdlib-jdk8"))
+
+  testImplementation(libs.junit.jupiter.api)
+  testImplementation(libs.bundles.strikt)
+  testImplementation("io.vertx:vertx-web-client")
+  testRuntimeOnly(libs.junit.jupiter.engine)
 }
 
 val compileKotlin: KotlinCompile by tasks
@@ -43,4 +48,8 @@ val watchForChange = "src/**/*"
 val doOnChange = "${projectDir}/gradlew classes"
 tasks.withType<JavaExec> {
   args = listOf("run", mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$launcherClassName", "--on-redeploy=$doOnChange")
+}
+
+tasks.test {
+  useJUnitPlatform()
 }

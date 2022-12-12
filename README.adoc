@@ -1,31 +1,54 @@
-= Starter
+= apim samples
 
 image:https://img.shields.io/badge/vert.x-4.3.6-purple.svg[link="https://vertx.io"]
 
-This application was generated using http://start.vertx.io
+This application provide API sample that I use to with https://github.com/gravitee-io/gravitee-api-management[Gravite APIM].
 
 == Building
 
 To launch your tests:
-```
+----
 ./gradlew clean test
-```
-
-To package your application:
-```
-./gradlew clean assemble
-```
+----
 
 To run your application:
-```
+----
 ./gradlew clean run
-```
+----
 
-== Help
+== Available endpoints
 
-* https://vertx.io/docs/[Vert.x Documentation]
-* https://stackoverflow.com/questions/tagged/vert.x?sort=newest&pageSize=15[Vert.x Stack Overflow]
-* https://groups.google.com/forum/?fromgroups#!forum/vertx[Vert.x User Group]
-* https://gitter.im/eclipse-vertx/vertx-users[Vert.x Gitter]
+=== HTTP /echo
 
+This HTTP endpoint can receive HTTP request. It will copy the request received in a 200 response.
 
+==== Example
+
+Using https://httpie.io/cli[httpie]:
+----
+http POST http://localhost:8888/echo\?qs\=value message=Hello
+----
+
+will respond
+
+[source,json]
+----
+{
+    "body": {
+        "message": "Hello"
+    },
+    "headers": {
+        "Accept": "application/json, */*;q=0.5",
+        "Accept-Encoding": "gzip, deflate",
+        "Connection": "keep-alive",
+        "Content-Length": "20",
+        "Content-Type": "application/json",
+        "Host": "localhost:8888",
+        "User-Agent": "HTTPie/3.2.1"
+    },
+    "method": "POST",
+    "query_params": {
+        "qs": "value"
+    }
+}
+----
