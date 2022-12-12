@@ -24,6 +24,11 @@ dependencies {
 
   implementation(libs.bundles.kotlin.coroutines)
   implementation(kotlin("stdlib-jdk8"))
+
+  testImplementation(libs.junit.jupiter.api)
+  testImplementation(libs.bundles.strikt)
+  testImplementation("io.vertx:vertx-web-client")
+  testRuntimeOnly(libs.junit.jupiter.engine)
 }
 
 application {
@@ -48,6 +53,10 @@ tasks.withType<JavaExec> {
     "--launcher-class=$launcherClassName",
     "--on-redeploy=$doOnChange"
   )
+}
+
+tasks.test {
+  useJUnitPlatform()
 }
 
 if (hasProperty("buildScan")) {
