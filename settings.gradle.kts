@@ -20,6 +20,7 @@ dependencyResolutionManagement {
       plugin("kotlin-jvm", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
       plugin("shadow", "com.github.johnrengelman.shadow").version("7.1.2")
       plugin("axion", "pl.allegro.tech.build.axion-release").version("1.14.0")
+      plugin("docker", "com.palantir.docker").version("0.34.0")
     }
   }
 }

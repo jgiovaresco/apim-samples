@@ -1,4 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import com.palantir.gradle.docker.DockerExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -6,6 +7,7 @@ plugins {
   application
   alias(libs.plugins.shadow)
   alias(libs.plugins.axion)
+  alias(libs.plugins.docker)
 }
 
 repositories {
@@ -14,6 +16,7 @@ repositories {
 
 project.version = scmVersion.version
 
+val jarClassifier = "fat"
 val mainVerticleName = "io.apim.samples.MainVerticle"
 val launcherClassName = "io.vertx.core.Launcher"
 val compileKotlin: KotlinCompile by tasks
@@ -39,7 +42,7 @@ application {
 }
 
 tasks.withType<ShadowJar> {
-  archiveClassifier.set("fat")
+  archiveClassifier.set(jarClassifier)
   manifest {
     attributes(mapOf("Main-Verticle" to mainVerticleName))
   }
@@ -60,6 +63,14 @@ tasks.withType<JavaExec> {
 
 tasks.test {
   useJUnitPlatform()
+}
+
+configure<DockerExtension> {
+  name = "${project.name}:${project.version}"
+  buildArgs(mapOf("BUILD_VERSION" to "${project.version}"))
+  files(tasks.findByName("shadowJar")?.outputs?.files)
+
+  tag("DockerHub", "jgiovaresco/${name}")
 }
 
 if (hasProperty("buildScan")) {
