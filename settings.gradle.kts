@@ -7,7 +7,7 @@ dependencyResolutionManagement {
       version("kotlin-coroutines", "1.6.4")
       version("vertx", "4.3.6")
       version("junit", "5.9.1")
-      version("strikt", "0.34.0")
+      version("strikt", "0.34.1")
 
       library("kotlin-coroutines-core", "org.jetbrains.kotlinx", "kotlinx-coroutines-core").versionRef("kotlin-coroutines")
       library("junit-jupiter-api", "org.junit.jupiter", "junit-jupiter-api").versionRef("junit")
