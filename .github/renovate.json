@@ -1,0 +1,35 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "commitBodyTable": true,
+  "dependencyDashboard": true,
+  "rebaseWhen": "conflicted",
+  "semanticCommitType": "chore",
+  "semanticCommits": "enabled",
+  "packageRules": [
+    {
+      "matchDepTypes": ["action"],
+      "automerge": true,
+      "automergeType": "branch",
+      "semanticCommitType": "ci"
+    },
+    {
+      "matchDatasources": ["maven"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true,
+      "automergeType": "branch",
+      "semanticCommitType": "chore"
+    },
+    {
+      "matchDatasources": ["npm"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "matchManagers": ["nvm"],
+      "automerge": true,
+      "automergeType": "branch"
+    }
+  ]
+}
