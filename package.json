@@ -1,0 +1,28 @@
+{
+  "name": "apim-samples",
+  "private": true,
+  "scripts": {
+    "postinstall": "is-ci || husky install",
+    "lint": "yarn lint:commit",
+    "lint:commit": "yarn commitlint --from $(git describe --tags --abbrev=0)",
+    "lint:prettier": "prettier --check '**/*.{js,json}'",
+    "lint:prettier:write": "prettier --write '**/*.{js,json}'",
+    "prepare": "is-ci || husky install"
+  },
+  "lint-staged": {
+    "*.js,*.json": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "17.3.0",
+    "@commitlint/config-conventional": "17.3.0",
+    "husky": "8.0.2",
+    "is-ci": "3.0.1",
+    "lint-staged": "13.1.0",
+    "pinst": "3.0.0",
+    "prettier": "2.8.1",
+    "prettier-plugin-packagejson": "2.3.0"
+  },
+  "packageManager": "yarn@3.3.1"
+}
