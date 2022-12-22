@@ -7,11 +7,19 @@ plugins {
   application
   alias(libs.plugins.shadow)
   alias(libs.plugins.docker)
+  alias(libs.plugins.axion)
 }
 
 repositories {
   mavenCentral()
 }
+
+scmVersion {
+  tag {
+    prefix.set("")
+  }
+}
+project.version = scmVersion.version
 
 val jarClassifier = "fat"
 val mainVerticleName = "io.apim.samples.MainVerticle"
