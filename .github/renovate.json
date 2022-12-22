@@ -1,0 +1,37 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "commitBodyTable": true,
+  "dependencyDashboard": true,
+  "rebaseWhen": "conflicted",
+  "semanticCommitScope ": "deps",
+  "semanticCommitType": "chore",
+  "semanticCommits": "enabled",
+  "packageRules": [
+    {
+      "matchDatasources": ["github-actions"],
+      "automerge": true,
+      "automergeType": "branch",
+      "semanticCommitType": "ci"
+    },
+    {
+      "matchDatasources": ["gradle"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "matchDatasources": ["npm"],
+      "matchUpdateTypes": ["major","patch", "minor"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "matchDatasources": ["nvm"],
+      "matchUpdateTypes": ["major","patch", "minor"],
+      "automerge": true,
+      "automergeType": "branch"
+    }
+  ]
+}
