@@ -5,18 +5,19 @@ plugins {
   alias(libs.plugins.kotlin.jvm)
   application
   alias(libs.plugins.shadow)
+  alias(libs.plugins.axion)
 }
 
 repositories {
   mavenCentral()
 }
 
+project.version = scmVersion.version
+
 val mainVerticleName = "io.apim.samples.MainVerticle"
 val launcherClassName = "io.vertx.core.Launcher"
-
-application {
-  mainClass.set(launcherClassName)
-}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions.jvmTarget = "11"
 
 dependencies {
   implementation(platform("io.vertx:vertx-stack-depchain:${libs.versions.vertx.get()}"))
@@ -33,8 +34,9 @@ dependencies {
   testRuntimeOnly(libs.junit.jupiter.engine)
 }
 
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions.jvmTarget = "11"
+application {
+  mainClass.set(launcherClassName)
+}
 
 tasks.withType<ShadowJar> {
   archiveClassifier.set("fat")
@@ -44,10 +46,16 @@ tasks.withType<ShadowJar> {
   mergeServiceFiles()
 }
 
-val watchForChange = "src/**/*"
-val doOnChange = "${projectDir}/gradlew classes"
 tasks.withType<JavaExec> {
-  args = listOf("run", mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$launcherClassName", "--on-redeploy=$doOnChange")
+  val watchForChange = "src/**/*"
+  val doOnChange = "${projectDir}/gradlew classes"
+  args = listOf(
+    "run",
+    mainVerticleName,
+    "--redeploy=$watchForChange",
+    "--launcher-class=$launcherClassName",
+    "--on-redeploy=$doOnChange"
+  )
 }
 
 tasks.test {
