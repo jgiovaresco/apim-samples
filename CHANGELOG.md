@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/jgiovaresco/apim-samples/compare/1.0.0...1.1.0) (2022-12-23)
+
+
+### Features
+
+* make http server port configurable ([7ce7da5](https://github.com/jgiovaresco/apim-samples/commit/7ce7da544aadc7bfa3892790e8c4aad5ac1ce5c8))
+
 # 1.0.0 (2022-12-23)
 
 
