@@ -1,5 +1,7 @@
 package io.apim.samples.rest
 
+import io.apim.samples.httpPort
+import io.vertx.config.ConfigRetriever
 import io.vertx.ext.web.Route
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.RoutingContext
@@ -9,16 +11,19 @@ import io.vertx.kotlin.coroutines.await
 import io.vertx.kotlin.coroutines.dispatcher
 import kotlinx.coroutines.launch
 
-class RestVerticle : CoroutineVerticle() {
+class RestVerticle(private val configRetriever: ConfigRetriever) : CoroutineVerticle() {
 
   override suspend fun start() {
     val router = router()
+    val config = configRetriever.config.await()
+    val port = config.getInteger(httpPort, 8888)
 
     vertx
       .createHttpServer()
       .requestHandler(router)
-      .listen(8888).await()
-    println("HTTP server started on port 8888")
+      .listen(port).await()
+
+    println("HTTP server started on port $port")
   }
 
   private fun router(): Router {

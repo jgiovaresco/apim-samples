@@ -16,6 +16,17 @@ To run your application:
 ./gradlew clean run
 ----
 
+== Configuration
+
+Configuration is provided through environment variables. Available variables are defined
+link:src/main/kotlin/io/apim/samples/Configuration.kt[here]
+
+[,java]
+----
+include::src/main/kotlin/io/apim/samples/Configuration.kt[lines=2..]
+----
+
+
 == Available endpoints
 
 === HTTP /echo

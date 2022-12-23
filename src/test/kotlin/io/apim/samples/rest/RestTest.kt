@@ -1,5 +1,6 @@
 package io.apim.samples.rest
 
+import io.vertx.config.ConfigRetriever
 import io.vertx.core.Vertx
 import io.vertx.ext.web.client.WebClient
 import io.vertx.ext.web.client.WebClientOptions
@@ -19,12 +20,13 @@ import strikt.assertions.isEqualTo
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RestTest {
   private val vertx: Vertx = Vertx.vertx()
+  private val configRetriever: ConfigRetriever = ConfigRetriever.create(vertx)
   lateinit var client: WebClient
 
   @BeforeAll
   fun setUp() {
     runBlocking {
-      vertx.deployVerticle(RestVerticle()).await()
+      vertx.deployVerticle(RestVerticle(configRetriever)).await()
       client = WebClient.create(
         vertx,
         WebClientOptions()
