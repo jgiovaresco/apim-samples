@@ -1,5 +1,6 @@
 rootProject.name = "apim-samples"
 include("app")
+include("helm")
 
 dependencyResolutionManagement {
   versionCatalogs {
