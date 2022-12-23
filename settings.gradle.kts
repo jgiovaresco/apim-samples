@@ -1,4 +1,5 @@
 rootProject.name = "apim-samples"
+include("app")
 
 dependencyResolutionManagement {
   versionCatalogs {
