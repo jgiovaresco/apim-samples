@@ -73,7 +73,7 @@ tasks.test {
 }
 
 configure<DockerExtension> {
-  name = "${project.name}:${project.version}"
+  name = "${rootProject.name}:${project.version}"
   buildArgs(mapOf("BUILD_VERSION" to "${project.version}"))
   files(tasks.findByName("shadowJar")?.outputs?.files)
 
