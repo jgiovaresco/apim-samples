@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/jgiovaresco/apim-samples/compare/1.1.0...1.1.1) (2022-12-23)
+
+
+### Bug Fixes
+
+* docker image ([6b658df](https://github.com/jgiovaresco/apim-samples/commit/6b658df7b90602b588089e35045f28715adcde27))
+
 # [1.1.0](https://github.com/jgiovaresco/apim-samples/compare/1.0.0...1.1.0) (2022-12-23)
 
 
