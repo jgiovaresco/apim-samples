@@ -1,7 +1,10 @@
 FROM graviteeio/java:17
 
 ARG BUILD_VERSION
+ENV JAR_FILE=apim-samples-${BUILD_VERSION}-fat.jar
 
-COPY apim-samples-${BUILD_VERSION}-fat.jar apim-samples-${BUILD_VERSION}-fat.jar
+WORKDIR /app
+COPY apim-samples-${BUILD_VERSION}-fat.jar $JAR_FILE
 
-CMD ["java", "-jar", "apim-samples-fat.jar"]
+ENTRYPOINT ["sh", "-c"]
+CMD ["exec java -jar $JAR_FILE"]
