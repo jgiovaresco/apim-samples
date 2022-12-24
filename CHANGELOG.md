@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/jgiovaresco/apim-samples/compare/1.2.0...1.3.0) (2022-12-24)
+
+
+### Features
+
+* create an Helm chart ([a677095](https://github.com/jgiovaresco/apim-samples/commit/a677095413972d3d5cb343fe5fc3804fb85348f0))
+
 # [1.2.0](https://github.com/jgiovaresco/apim-samples/compare/1.1.1...1.2.0) (2022-12-24)
 
 
