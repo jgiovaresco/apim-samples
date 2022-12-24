@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/jgiovaresco/apim-samples/compare/1.1.1...1.2.0) (2022-12-24)
+
+
+### Features
+
+* configure a healthcheck route ([3cef941](https://github.com/jgiovaresco/apim-samples/commit/3cef941c637f1b7b5c2ca57d5517397f431b2eda))
+
 ## [1.1.1](https://github.com/jgiovaresco/apim-samples/compare/1.1.0...1.1.1) (2022-12-23)
 
 
