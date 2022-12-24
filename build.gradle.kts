@@ -30,6 +30,7 @@ compileKotlin.kotlinOptions.jvmTarget = "11"
 dependencies {
   implementation(platform("io.vertx:vertx-stack-depchain:${libs.versions.vertx.get()}"))
   implementation("io.vertx:vertx-config")
+  implementation("io.vertx:vertx-health-check")
   implementation("io.vertx:vertx-web")
   implementation("io.vertx:vertx-lang-kotlin-coroutines")
   implementation("io.vertx:vertx-lang-kotlin")
