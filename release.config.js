@@ -8,11 +8,17 @@ module.exports = {
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
+    [
+      "@semantic-release/exec",
+      {
+        prepareCmd: 'yq e -i " .version = \\"${nextRelease.version}\\" | .appVersion = \\"${nextRelease.version}\\"" ./helm/src/main/helm/Chart.yaml',
+      },
+    ],
     "@semantic-release/github",
     [
       "@semantic-release/git",
       {
-        assets: ["CHANGELOG.md"],
+        assets: ["CHANGELOG.md", "helm/src/main/helm/Chart.yaml"],
         message: "chore: release ${nextRelease.version} [skip ci]",
       },
     ],
