@@ -2,6 +2,8 @@ package io.apim.samples.rest
 
 import io.apim.samples.httpPort
 import io.vertx.config.ConfigRetriever
+import io.vertx.ext.healthchecks.HealthCheckHandler
+import io.vertx.ext.healthchecks.HealthChecks
 import io.vertx.ext.web.Route
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.RoutingContext
@@ -11,7 +13,7 @@ import io.vertx.kotlin.coroutines.await
 import io.vertx.kotlin.coroutines.dispatcher
 import kotlinx.coroutines.launch
 
-class RestVerticle(private val configRetriever: ConfigRetriever) : CoroutineVerticle() {
+class RestVerticle(private val configRetriever: ConfigRetriever, private val healthChecks: HealthChecks) : CoroutineVerticle() {
 
   override suspend fun start() {
     val router = router()
@@ -28,9 +30,11 @@ class RestVerticle(private val configRetriever: ConfigRetriever) : CoroutineVert
 
   private fun router(): Router {
     val router = Router.router(vertx)
+    val healthCheckHandler = HealthCheckHandler.createWithHealthChecks(healthChecks)
     router.route().handler(BodyHandler.create())
 
     router.route("/echo").coroutineHandler(::echoHandler)
+    router.route("/health*").handler(healthCheckHandler)
 
     return router
   }

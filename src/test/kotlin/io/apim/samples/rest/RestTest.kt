@@ -2,8 +2,11 @@ package io.apim.samples.rest
 
 import io.vertx.config.ConfigRetriever
 import io.vertx.core.Vertx
+import io.vertx.ext.healthchecks.HealthChecks
+import io.vertx.ext.healthchecks.Status
 import io.vertx.ext.web.client.WebClient
 import io.vertx.ext.web.client.WebClientOptions
+import io.vertx.kotlin.core.json.array
 import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
 import io.vertx.kotlin.coroutines.await
@@ -21,12 +24,14 @@ import strikt.assertions.isEqualTo
 class RestTest {
   private val vertx: Vertx = Vertx.vertx()
   private val configRetriever: ConfigRetriever = ConfigRetriever.create(vertx)
+  private val healthChecks: HealthChecks = HealthChecks.create(vertx)
+
   lateinit var client: WebClient
 
   @BeforeAll
   fun setUp() {
     runBlocking {
-      vertx.deployVerticle(RestVerticle(configRetriever)).await()
+      vertx.deployVerticle(RestVerticle(configRetriever, healthChecks)).await()
       client = WebClient.create(
         vertx,
         WebClientOptions()
@@ -101,6 +106,34 @@ class RestTest {
           and {
             get { getJsonObject("body") }.isEqualTo(body)
           }
+        }
+      }
+    }
+  }
+
+  @Nested
+  inner class HealthCheckHandler {
+    @Test
+    fun `should return the status healthcheck`() {
+      runBlocking {
+        healthChecks.register("status") { promise -> promise.complete(Status.OK()) }
+
+        val result = client.get("/health").send().await()
+
+        expectThat(result) {
+          get { statusCode() }.isEqualTo(200)
+          get { bodyAsJsonObject() }.isEqualTo(json {
+            obj(
+              "checks" to array(
+                obj(
+                  "id" to "status",
+                  "status" to "UP"
+                )
+              ),
+              "status" to "UP",
+              "outcome" to "UP"
+            )
+          })
         }
       }
     }
