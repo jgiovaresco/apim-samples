@@ -33,20 +33,23 @@ probes:
 
 service:
   type: ClusterIP
-  port: 80
+  port:
+    http: 80
+    websocket: 8000
 
 ingress:
-  enabled: false
-  className: ""
-  annotations:
-    kubernetes.io/ingress.class: nginx
+  http:
+    enabled: false
+    className: ""
+    annotations:
+      kubernetes.io/ingress.class: nginx
 
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: Prefix
-  tls: []
+    hosts:
+      - host: chart-example.local
+        paths:
+          - path: /
+            pathType: Prefix
+    tls: []
 
 resources: {}
 
@@ -65,3 +68,5 @@ affinity: {}
 app:
   http:
     port: 8080
+  websocket:
+    port: 8090

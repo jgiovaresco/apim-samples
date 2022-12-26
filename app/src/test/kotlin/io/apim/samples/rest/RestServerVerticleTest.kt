@@ -10,6 +10,7 @@ import io.vertx.kotlin.core.json.obj
 import io.vertx.rxjava3.config.ConfigRetriever
 import io.vertx.rxjava3.core.Vertx
 import io.vertx.rxjava3.ext.web.client.WebClient
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -21,7 +22,7 @@ import strikt.assertions.isEqualTo
 
 @ExtendWith(VertxExtension::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class RestTest {
+class RestServerVerticleTest {
   private val vertx: Vertx = Vertx.vertx()
   private val configRetriever: ConfigRetriever = ConfigRetriever.create(vertx)
 
@@ -29,15 +30,21 @@ class RestTest {
 
   @BeforeAll
   fun setUp(testContext: VertxTestContext) {
-    vertx.deployVerticle(RestVerticle(configRetriever))
+    vertx.deployVerticle(RestServerVerticle(configRetriever))
       .subscribeBy { testContext.completeNow() }
 
     client = WebClient.create(
       vertx,
       WebClientOptions()
         .setDefaultHost("localhost")
-        .setDefaultPort(8888)
+        .setDefaultPort(RestServerVerticle.DEFAULT_PORT)
     )
+  }
+
+  @AfterAll
+  fun tearDown(testContext: VertxTestContext) {
+    vertx.close()
+      .subscribeBy { testContext.completeNow() }
   }
 
   @Nested

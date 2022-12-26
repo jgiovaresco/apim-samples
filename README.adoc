@@ -2,7 +2,7 @@
 
 image:https://img.shields.io/badge/vert.x-4.3.6-purple.svg[link="https://vertx.io"]
 
-This application provide API sample that I use to with https://github.com/gravitee-io/gravitee-api-management[Gravite APIM].
+This application provide API sample that I use to play with https://github.com/gravitee-io/gravitee-api-management[Gravite APIM].
 
 == Building
 
@@ -19,15 +19,19 @@ To run your application:
 == Configuration
 
 Configuration is provided through environment variables. Available variables are defined
-link:src/main/kotlin/io/apim/samples/Configuration.kt[here]
+link:app/src/main/kotlin/io/apim/samples/Configuration.kt[here]
 
 [,java]
 ----
-include::src/main/kotlin/io/apim/samples/Configuration.kt[lines=2..]
+include::app/src/main/kotlin/io/apim/samples/Configuration.kt[lines=2..]
 ----
 
-
 == Available endpoints
+
+It starts 2 http servers
+
+- one used to handle regular HTTP request. (default port 8888)
+- one used to handle WebSockets. (default port 8890)
 
 === HTTP /echo
 
@@ -61,5 +65,29 @@ will respond
     "query_params": {
         "qs": "value"
     }
+}
+----
+
+=== WebSocket /ws/echo
+
+This HTTP endpoint can receive HTTP request. It will copy the request received in a 200 response.
+
+==== Example
+
+Using https://github.com/vi/websocat[websocat]:
+----
+websocat -1 ws://localhost:8890/ws/echo
+{"message": "Hello"}
+----
+
+will respond
+
+[source,json]
+----
+{
+  "type": "json",
+  "request": {
+    "message": "Hello"
+  }
 }
 ----
