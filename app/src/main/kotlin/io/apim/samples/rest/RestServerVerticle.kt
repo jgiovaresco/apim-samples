@@ -11,12 +11,16 @@ import io.vertx.rxjava3.ext.web.Router
 import io.vertx.rxjava3.ext.web.handler.BodyHandler
 import org.slf4j.LoggerFactory
 
-class RestVerticle(private val configRetriever: ConfigRetriever) :
+class RestServerVerticle(private val configRetriever: ConfigRetriever) :
   AbstractVerticle() {
+  companion object {
+    const val DEFAULT_PORT = 8888
+  }
+
   private val logger = LoggerFactory.getLogger(javaClass)
 
   override fun rxStart(): Completable = configRetriever.config
-    .map { it.getInteger(httpPort, 8888) }
+    .map { it.getInteger(httpPort, DEFAULT_PORT) }
     .flatMap { port ->
       vertx
         .createHttpServer()
