@@ -12,8 +12,10 @@ import io.vertx.kotlin.coroutines.CoroutineVerticle
 import io.vertx.kotlin.coroutines.await
 import io.vertx.kotlin.coroutines.dispatcher
 import kotlinx.coroutines.launch
+import org.slf4j.LoggerFactory
 
 class RestVerticle(private val configRetriever: ConfigRetriever, private val healthChecks: HealthChecks) : CoroutineVerticle() {
+  private val logger = LoggerFactory.getLogger(javaClass)
 
   override suspend fun start() {
     val router = router()
@@ -25,7 +27,7 @@ class RestVerticle(private val configRetriever: ConfigRetriever, private val hea
       .requestHandler(router)
       .listen(port).await()
 
-    println("HTTP server started on port $port")
+    logger.info("HTTP server started on port $port")
   }
 
   private fun router(): Router {

@@ -35,6 +35,9 @@ dependencies {
   implementation("io.vertx:vertx-lang-kotlin-coroutines")
   implementation("io.vertx:vertx-lang-kotlin")
 
+  testImplementation(libs.slf4j.api)
+  implementation(libs.bundles.logback)
+
   implementation(libs.bundles.kotlin.coroutines)
   implementation(kotlin("stdlib-jdk8"))
 
