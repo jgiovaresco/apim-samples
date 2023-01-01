@@ -1,9 +1,9 @@
 package io.apim.samples.rest
 
-import io.vertx.core.MultiMap
-import io.vertx.ext.web.RoutingContext
 import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
+import io.vertx.rxjava3.core.MultiMap
+import io.vertx.rxjava3.ext.web.RoutingContext
 
 fun echoHandler(ctx: RoutingContext) {
   ctx.response()
@@ -19,6 +19,7 @@ fun echoHandler(ctx: RoutingContext) {
         )
       }.toString()
     )
+    .subscribe()
 }
 
 /** Transform a multimap into a simple map. Multiple values are joined in a string separated with ; */
