@@ -28,18 +28,19 @@ val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions.jvmTarget = "11"
 
 dependencies {
+  implementation(kotlin("stdlib-jdk8"))
+
   implementation(platform("io.vertx:vertx-stack-depchain:${libs.versions.vertx.get()}"))
   implementation("io.vertx:vertx-config")
   implementation("io.vertx:vertx-health-check")
-  implementation("io.vertx:vertx-web")
-  implementation("io.vertx:vertx-lang-kotlin-coroutines")
+  implementation("io.vertx:vertx-junit5")
   implementation("io.vertx:vertx-lang-kotlin")
+  implementation("io.vertx:vertx-rx-java3")
+  implementation("io.vertx:vertx-web")
 
-  testImplementation(libs.slf4j.api)
   implementation(libs.bundles.logback)
-
-  implementation(libs.bundles.kotlin.coroutines)
-  implementation(kotlin("stdlib-jdk8"))
+  implementation(libs.bundles.rx)
+  implementation(libs.slf4j.api)
 
   testImplementation(libs.junit.jupiter.api)
   testImplementation(libs.bundles.strikt)
