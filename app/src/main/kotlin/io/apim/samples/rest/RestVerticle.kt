@@ -2,6 +2,7 @@ package io.apim.samples.rest
 
 import io.apim.samples.httpPort
 import io.reactivex.rxjava3.core.Completable
+import io.vertx.ext.healthchecks.Status
 import io.vertx.rxjava3.config.ConfigRetriever
 import io.vertx.rxjava3.core.AbstractVerticle
 import io.vertx.rxjava3.ext.healthchecks.HealthCheckHandler
@@ -10,7 +11,7 @@ import io.vertx.rxjava3.ext.web.Router
 import io.vertx.rxjava3.ext.web.handler.BodyHandler
 import org.slf4j.LoggerFactory
 
-class RestVerticle(private val configRetriever: ConfigRetriever, private val healthChecks: HealthChecks) :
+class RestVerticle(private val configRetriever: ConfigRetriever) :
   AbstractVerticle() {
   private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -27,14 +28,13 @@ class RestVerticle(private val configRetriever: ConfigRetriever, private val hea
     }
     .ignoreElement()
 
-  private fun router(): Router {
-    val router = Router.router(vertx)
-    val healthCheckHandler = HealthCheckHandler.createWithHealthChecks(healthChecks)
+  private fun router(): Router = Router.router(vertx).let { router ->
     router.route().handler(BodyHandler.create())
-
     router.route("/echo").handler(::echoHandler)
-    router.route("/health*").handler(healthCheckHandler)
-
-    return router
+    router.route("/health*").handler(HealthCheckHandler.createWithHealthChecks(healthChecks()))
+    router
   }
+
+  private fun healthChecks(): HealthChecks =
+    HealthChecks.create(vertx).register("status") { promise -> promise.complete(Status.OK()) }
 }

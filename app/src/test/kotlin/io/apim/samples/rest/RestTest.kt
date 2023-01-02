@@ -1,7 +1,6 @@
 package io.apim.samples.rest
 
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import io.vertx.ext.healthchecks.Status
 import io.vertx.ext.web.client.WebClientOptions
 import io.vertx.junit5.VertxExtension
 import io.vertx.junit5.VertxTestContext
@@ -10,7 +9,6 @@ import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
 import io.vertx.rxjava3.config.ConfigRetriever
 import io.vertx.rxjava3.core.Vertx
-import io.vertx.rxjava3.ext.healthchecks.HealthChecks
 import io.vertx.rxjava3.ext.web.client.WebClient
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
@@ -26,13 +24,12 @@ import strikt.assertions.isEqualTo
 class RestTest {
   private val vertx: Vertx = Vertx.vertx()
   private val configRetriever: ConfigRetriever = ConfigRetriever.create(vertx)
-  private val healthChecks: HealthChecks = HealthChecks.create(vertx)
 
   lateinit var client: WebClient
 
   @BeforeAll
   fun setUp(testContext: VertxTestContext) {
-    vertx.deployVerticle(RestVerticle(configRetriever, healthChecks))
+    vertx.deployVerticle(RestVerticle(configRetriever))
       .subscribeBy { testContext.completeNow() }
 
     client = WebClient.create(
@@ -121,8 +118,6 @@ class RestTest {
   inner class HealthCheckHandler {
     @Test
     fun `should return the status healthcheck`() {
-      healthChecks.register("status") { promise -> promise.complete(Status.OK()) }
-
       client.get("/health")
         .send()
         .test()
