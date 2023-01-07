@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/jgiovaresco/apim-samples/compare/1.3.0...1.4.0) (2023-01-07)
+
+
+### Features
+
+* echo websocket endpoint ([a9ac83a](https://github.com/jgiovaresco/apim-samples/commit/a9ac83a31025010437a46aa3e215f5f912b4d48c))
+
 # [1.3.0](https://github.com/jgiovaresco/apim-samples/compare/1.2.0...1.3.0) (2022-12-24)
 
 
