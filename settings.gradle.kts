@@ -12,7 +12,7 @@ dependencyResolutionManagement {
       version("rxjava", "3.1.5")
       version("rxkotlin", "3.0.1")
       version("slf4j", "2.0.6")
-      version("strikt", "0.34.0")
+      version("strikt", "0.34.1")
 
       library("logback-classic", "ch.qos.logback", "logback-classic").versionRef("logback")
       library("logback-core", "ch.qos.logback", "logback-core").versionRef("logback")
