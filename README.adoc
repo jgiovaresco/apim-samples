@@ -28,10 +28,11 @@ include::app/src/main/kotlin/io/apim/samples/Configuration.kt[lines=2..]
 
 == Available endpoints
 
-It starts 2 http servers
+It starts 3 http servers
 
 - one used to handle regular HTTP request. (default port 8888)
 - one used to handle WebSockets. (default port 8890)
+- one used to handle GRPC. (default port 8892)
 
 === HTTP /echo
 
@@ -70,7 +71,7 @@ will respond
 
 === WebSocket /ws/echo
 
-This HTTP endpoint can receive HTTP request. It will copy the request received in a 200 response.
+This endpoint can receive WebSocket request. It will copy the request received in the response.
 
 ==== Example
 
@@ -88,6 +89,45 @@ will respond
   "type": "json",
   "request": {
     "message": "Hello"
+  }
+}
+----
+
+=== GRPC
+
+The server provide an adapted example of the Route Guide from https://github.com/grpc/grpc-java/tree/master/examples[gRPC examples]
+
+The service shows the various kind of gRPC service calls:
+
+- simple RPC
+- server-side streaming RPC
+- client-side streaming RPC
+- bidirectional streaming RPC
+
+The proto file is available at
+
+- link:app/src/main/resources/grpc/route_guide.proto[here]
+- or it can be downloaded using the HTTP server: http://localhost:8888/grpc/route_guide.proto
+
+==== Example
+
+Using https://github.com/fullstorydev/grpcurl[grpcurl].
+(The server does not expose Reflection service, therefore we need to provide the protofile to the client)
+
+[source,bash]
+----
+grpcurl -d '{"latitude": 413628156, "longitude": -749015468}' -import-path app/src/main/resources/grpc -proto route_guide.proto -plaintext localhost:8892 routeguide.RouteGuide/GetFeature
+----
+
+will respond
+
+[source,json]
+----
+{
+  "name": "U.S. 6, Shohola, PA 18458, USA",
+  "location": {
+    "latitude": 413628156,
+    "longitude": -749015468
   }
 }
 ----
