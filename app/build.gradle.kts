@@ -1,4 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import com.google.protobuf.gradle.id
 import com.palantir.gradle.docker.DockerExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -8,6 +9,7 @@ plugins {
   alias(libs.plugins.shadow)
   alias(libs.plugins.docker)
   alias(libs.plugins.axion)
+  alias(libs.plugins.protobuf)
 }
 
 repositories {
@@ -26,30 +28,44 @@ val mainVerticleName = "io.apim.samples.MainVerticle"
 val launcherClassName = "io.vertx.core.Launcher"
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions.jvmTarget = "11"
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions.jvmTarget = "11"
 
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
 
   implementation(platform("io.vertx:vertx-stack-depchain:${libs.versions.vertx.get()}"))
   implementation("io.vertx:vertx-config")
+  implementation("io.vertx:vertx-grpc") // required for generated stubs
+  implementation("io.vertx:vertx-grpc-server")
   implementation("io.vertx:vertx-health-check")
   implementation("io.vertx:vertx-junit5")
   implementation("io.vertx:vertx-lang-kotlin")
   implementation("io.vertx:vertx-rx-java3")
   implementation("io.vertx:vertx-web")
 
+  implementation(libs.bundles.grpc)
   implementation(libs.bundles.logback)
   implementation(libs.bundles.rx)
   implementation(libs.slf4j.api)
 
   testImplementation(libs.junit.jupiter.api)
   testImplementation(libs.bundles.strikt)
+  testImplementation("io.vertx:vertx-grpc-client")
   testImplementation("io.vertx:vertx-web-client")
   testRuntimeOnly(libs.junit.jupiter.engine)
 }
 
 application {
   mainClass.set(launcherClassName)
+}
+
+sourceSets {
+  main {
+    proto {
+      srcDir("src/main/resources/grpc")
+    }
+  }
 }
 
 tasks.withType<ShadowJar> {
@@ -88,5 +104,33 @@ if (hasProperty("buildScan")) {
   extensions.findByName("buildScan")?.withGroovyBuilder {
     setProperty("termsOfServiceUrl", "https://gradle.com/terms-of-service")
     setProperty("termsOfServiceAgree", "yes")
+  }
+}
+
+protobuf {
+  protoc {
+    artifact = libs.protobuf.compiler.get().toString()
+  }
+
+  plugins {
+    id("grpc") {
+      artifact = libs.protoc.gen.java.get().toString()
+    }
+    id("vertx") {
+      artifact = "io.vertx:vertx-grpc-protoc-plugin:${libs.versions.vertx.get()}"
+
+    }
+  }
+
+  generateProtoTasks {
+    all().forEach {
+      it.builtins {
+        id("kotlin")
+      }
+      it.plugins {
+        id("grpc") {}
+        id("vertx") {}
+      }
+    }
   }
 }

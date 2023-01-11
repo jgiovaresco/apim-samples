@@ -16,9 +16,13 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import strikt.api.expectThat
 import strikt.assertions.contains
+import strikt.assertions.containsExactly
 import strikt.assertions.isEqualTo
+import kotlin.io.path.Path
 
 @ExtendWith(VertxExtension::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -116,6 +120,51 @@ class RestServerVerticleTest {
               get { getJsonObject("body") }.isEqualTo(body)
             }
           }
+          true
+        }
+    }
+  }
+
+  @Nested
+  @ExtendWith(VertxExtension::class)
+  inner class ProtobufFileHandler {
+    @Test
+    fun `should list all available protobuf files`() {
+      client.get("/grpc").send()
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+          expectThat(result.bodyAsJsonObject()) {
+            get { getJsonArray("protoFiles").list }.containsExactly("http://localhost:8888/grpc/route_guide.proto")
+          }
+          true
+        }
+    }
+
+    @Test
+    fun `should return the content of a specific proto file`() {
+      client.get("/grpc/route_guide.proto").send()
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+          expectThat(result.bodyAsString()).isEqualTo(
+            Path(ClassLoader.getSystemResource("grpc/route_guide.proto").file).toFile().readText()
+          )
+          true
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = [ "unknown", "unknown.proto" ])
+    fun `should return 404 when the requested file does not exist`(file: String) {
+      client.get("/grpc/$file").send()
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+          expectThat(result.statusCode()).isEqualTo(404)
           true
         }
     }

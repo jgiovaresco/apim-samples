@@ -39,11 +39,16 @@ spec:
             - name: websocket
               containerPort: {{ .Values.app.websocket.port }}
               protocol: TCP
+            - name: grpc
+              containerPort: {{ .Values.app.grpc.port }}
+              protocol: TCP
           env:
             - name: HTTP_PORT
               value: {{ .Values.app.http.port | quote }}
             - name: WEBSOCKET_PORT
               value: {{ .Values.app.websocket.port | quote }}
+            - name: GRPC_PORT
+              value: {{ .Values.app.grpc.port | quote }}
 {{- if .Values.app.env }}
 {{ toYaml ( .Values.app.env) | indent 12 }}
 {{- end }}

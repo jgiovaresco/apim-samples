@@ -35,6 +35,7 @@ class RestServerVerticle(private val configRetriever: ConfigRetriever) :
   private fun router(): Router = Router.router(vertx).let { router ->
     router.route().handler(BodyHandler.create())
     router.route("/echo").handler(::echoHandler)
+    router.route("/grpc*").handler(::protobufFileHandler)
     router.route("/health*").handler(HealthCheckHandler.createWithHealthChecks(healthChecks()))
     router
   }

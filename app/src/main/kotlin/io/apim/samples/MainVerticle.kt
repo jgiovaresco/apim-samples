@@ -1,5 +1,6 @@
 package io.apim.samples
 
+import io.apim.samples.grpc.GrpcServerVerticle
 import io.apim.samples.rest.RestServerVerticle
 import io.apim.samples.websocket.WebSocketServerVerticle
 import io.reactivex.rxjava3.core.Completable
@@ -15,6 +16,7 @@ class MainVerticle : AbstractVerticle() {
     return Single.merge(
       vertx.deployVerticle(WebSocketServerVerticle(configRetriever)),
       vertx.deployVerticle(RestServerVerticle(configRetriever)),
+      vertx.deployVerticle(GrpcServerVerticle(configRetriever)),
     ).ignoreElements()
   }
 }
