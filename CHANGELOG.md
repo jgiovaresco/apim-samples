@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/jgiovaresco/apim-samples/compare/1.4.0...1.5.0) (2023-01-12)
+
+
+### Features
+
+* route_guide grpc service ([743a83f](https://github.com/jgiovaresco/apim-samples/commit/743a83fceb53d21d6ad0b1fbd36ba972f86d3624))
+
 # [1.4.0](https://github.com/jgiovaresco/apim-samples/compare/1.3.0...1.4.0) (2023-01-07)
 
 
