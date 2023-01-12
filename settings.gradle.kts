@@ -6,7 +6,7 @@ dependencyResolutionManagement {
   versionCatalogs {
     create("libs") {
       version("annotation-api", "1.3.1")
-      version("grpc", "1.51.1")
+      version("grpc", "1.52.0")
       version("junit", "5.9.2")
       version("kotlin", "1.7.21")
       version("logback", "1.4.5")
