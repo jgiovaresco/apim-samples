@@ -1,11 +1,12 @@
 package io.apim.samples
 
 import io.apim.samples.rest.RestServerVerticle
-import io.apim.samples.websocket.WebSocketServerVerticle
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.vertx.ext.web.client.WebClientOptions
 import io.vertx.junit5.VertxExtension
 import io.vertx.junit5.VertxTestContext
+import io.vertx.kotlin.core.json.json
+import io.vertx.kotlin.core.json.obj
 import io.vertx.rxjava3.core.Vertx
 import io.vertx.rxjava3.ext.web.client.WebClient
 import org.junit.jupiter.api.AfterAll
@@ -15,6 +16,9 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.extension.ExtendWith
+import strikt.api.expectThat
+import strikt.assertions.contains
+import strikt.assertions.isEqualTo
 
 @ExtendWith(VertxExtension::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -58,12 +62,42 @@ class MainVerticleTest {
         vertx,
         WebClientOptions()
           .setDefaultHost("localhost")
-          .setDefaultPort(WebSocketServerVerticle.DEFAULT_PORT)
+          .setDefaultPort(RestServerVerticle.DEFAULT_PORT)
       )
         .get("/health").send()
         .test()
         .await()
         .assertNoErrors()
+        .assertValue { result ->
+          expectThat(result) {
+            get { statusCode() }.isEqualTo(200)
+            get { bodyAsJsonObject().getJsonArray("checks").list }
+              .contains(json { obj("id" to "websocket", "status" to "UP") }.map)
+          }
+          true
+        }
+    }
+
+    @Test
+    fun `should start a grpc server`() {
+      WebClient.create(
+        vertx,
+        WebClientOptions()
+          .setDefaultHost("localhost")
+          .setDefaultPort(RestServerVerticle.DEFAULT_PORT)
+      )
+        .get("/health").send()
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+          expectThat(result) {
+            get { statusCode() }.isEqualTo(200)
+            get { bodyAsJsonObject().getJsonArray("checks").list }
+              .contains(json { obj("id" to "grpc", "status" to "UP") }.map)
+          }
+          true
+        }
     }
   }
 }

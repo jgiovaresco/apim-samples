@@ -4,7 +4,6 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.vertx.ext.web.client.WebClientOptions
 import io.vertx.junit5.VertxExtension
 import io.vertx.junit5.VertxTestContext
-import io.vertx.kotlin.core.json.array
 import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
 import io.vertx.rxjava3.config.ConfigRetriever
@@ -181,19 +180,7 @@ class RestServerVerticleTest {
         .assertNoErrors()
         .assertValue { result ->
           expectThat(result) {
-            get { statusCode() }.isEqualTo(200)
-            get { bodyAsJsonObject() }.isEqualTo(json {
-              obj(
-                "checks" to array(
-                  obj(
-                    "id" to "status",
-                    "status" to "UP"
-                  )
-                ),
-                "status" to "UP",
-                "outcome" to "UP"
-              )
-            })
+            get { statusCode() }.isEqualTo(204)
           }
           true
         }
