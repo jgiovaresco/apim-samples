@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/jgiovaresco/apim-samples/compare/1.5.0...1.6.0) (2023-01-13)
+
+
+### Features
+
+* improve health checks ([b314156](https://github.com/jgiovaresco/apim-samples/commit/b314156d9946552bdb51e55d3c720d03799b71bb))
+
 # [1.5.0](https://github.com/jgiovaresco/apim-samples/compare/1.4.0...1.5.0) (2023-01-12)
 
 
