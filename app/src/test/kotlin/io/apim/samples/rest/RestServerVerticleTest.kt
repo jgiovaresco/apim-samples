@@ -1,6 +1,7 @@
 package io.apim.samples.rest
 
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.vertx.core.http.HttpHeaders
 import io.vertx.ext.web.client.WebClientOptions
 import io.vertx.junit5.VertxExtension
 import io.vertx.junit5.VertxTestContext
@@ -8,6 +9,7 @@ import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
 import io.vertx.rxjava3.config.ConfigRetriever
 import io.vertx.rxjava3.core.Vertx
+import io.vertx.rxjava3.core.buffer.Buffer
 import io.vertx.rxjava3.ext.web.client.WebClient
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
@@ -21,6 +23,7 @@ import strikt.api.expectThat
 import strikt.assertions.contains
 import strikt.assertions.containsExactly
 import strikt.assertions.isEqualTo
+import strikt.assertions.isNull
 import kotlin.io.path.Path
 
 @ExtendWith(VertxExtension::class)
@@ -90,37 +93,133 @@ class RestServerVerticleTest {
         }
     }
 
-    @Test
-    fun `should return POST request in response body`() {
-      val body = json {
-        obj(
-          "message" to "hello!",
-          "attribute" to "value"
-        )
+    @Nested
+    inner class PostRequest {
+      @ParameterizedTest
+      @ValueSource(
+        strings = [
+          "application/json",
+          "application/vnd.company.api-v1+json",
+        ]
+      )
+      fun `should return json request in response body`(contentType: String) {
+        val body = json {
+          obj(
+            "message" to "hello!",
+            "attribute" to "value"
+          )
+        }
+
+        client.post("/echo")
+          .putHeader(HttpHeaders.CONTENT_TYPE.toString(), contentType)
+          .sendJsonObject(body)
+          .test()
+          .await()
+          .assertNoErrors()
+          .assertValue { result ->
+            expectThat(result.bodyAsJsonObject()) {
+              get { getString("method") }.isEqualTo("POST")
+
+              and {
+                get { getJsonObject("headers").getString("user-agent") }.contains("Vert.x-WebClient")
+                get { getJsonObject("headers").getString("host") }.isEqualTo("localhost:8888")
+                get { getJsonObject("headers").getString("content-type") }.isEqualTo(contentType)
+                get { getJsonObject("headers").getString("content-length") }.isEqualTo(body.toString().length.toString())
+              }
+
+              and {
+                get { getJsonObject("body").getString("type") }.isEqualTo("json")
+                get { getJsonObject("body").getJsonObject("content") }.isEqualTo(body)
+              }
+            }
+            true
+          }
       }
 
-      client.post("/echo")
-        .sendJsonObject(body)
-        .test()
-        .await()
-        .assertNoErrors()
-        .assertValue { result ->
-          expectThat(result.bodyAsJsonObject()) {
-            get { getString("method") }.isEqualTo("POST")
+      @ParameterizedTest
+      @ValueSource(
+        strings = [
+          "text/plain",
+          "text/html",
+          "text/xml"
+        ]
+      )
+      fun `should return text request in response body`(contentType: String) {
+        val body = "a random text"
 
-            and {
-              get { getJsonObject("headers").getString("user-agent") }.contains("Vert.x-WebClient")
-              get { getJsonObject("headers").getString("host") }.isEqualTo("localhost:8888")
-              get { getJsonObject("headers").getString("content-type") }.isEqualTo("application/json")
-              get { getJsonObject("headers").getString("content-length") }.isEqualTo(body.toString().length.toString())
-            }
+        client.post("/echo")
+          .putHeader(HttpHeaders.CONTENT_TYPE.toString(), contentType)
+          .sendBuffer(Buffer.buffer(body))
+          .test()
+          .await()
+          .assertNoErrors()
+          .assertValue { result ->
+            expectThat(result.bodyAsJsonObject()) {
+              get { getString("method") }.isEqualTo("POST")
 
-            and {
-              get { getJsonObject("body") }.isEqualTo(body)
+              and {
+                get { getJsonObject("headers").getString("user-agent") }.contains("Vert.x-WebClient")
+                get { getJsonObject("headers").getString("host") }.isEqualTo("localhost:8888")
+                get { getJsonObject("headers").getString("content-type") }.isEqualTo(contentType)
+                get { getJsonObject("headers").getString("content-length") }.isEqualTo(body.length.toString())
+              }
+
+              and {
+                get { getJsonObject("body").getString("type") }.isEqualTo("text")
+                get { getJsonObject("body").getString("content") }.isEqualTo(body)
+              }
             }
+            true
           }
-          true
-        }
+      }
+
+      @Test
+      fun `should return unknown type body request in response body`() {
+        val body = "unknown"
+
+        client.post("/echo")
+          .sendBuffer(Buffer.buffer(body))
+          .test()
+          .await()
+          .assertNoErrors()
+          .assertValue { result ->
+            expectThat(result.bodyAsJsonObject()) {
+              get { getString("method") }.isEqualTo("POST")
+
+              and {
+                get { getJsonObject("headers").getString("user-agent") }.contains("Vert.x-WebClient")
+                get { getJsonObject("headers").getString("host") }.isEqualTo("localhost:8888")
+                get { getJsonObject("headers").getString("content-type") }.isNull()
+                get { getJsonObject("headers").getString("content-length") }.isEqualTo(body.length.toString())
+              }
+
+              and {
+                get { getJsonObject("body").getString("type") }.isEqualTo("unknown")
+                get { getJsonObject("body").getString("content") }.isEqualTo(body)
+              }
+            }
+            true
+          }
+      }
+
+      @Test
+      fun `should return a bad request error when malformed Json request`() {
+        val body = "a message"
+
+        client.post("/echo")
+          .putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json")
+          .sendBuffer(Buffer.buffer(body))
+          .test()
+          .await()
+          .assertNoErrors()
+          .assertValue { result ->
+            expectThat(result.bodyAsJsonObject()) {
+              get { getString("title") }.isEqualTo("The request body fail to be parsed")
+              get { getString("detail") }.contains("Unrecognized token 'a': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')")
+            }
+            true
+          }
+      }
     }
   }
 
