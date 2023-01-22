@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/jgiovaresco/apim-samples/compare/1.6.0...1.7.0) (2023-01-22)
+
+
+### Features
+
+* rest echo can handle non json request ([d87a191](https://github.com/jgiovaresco/apim-samples/commit/d87a1918802607e66bc7259c470b8b7f9b8774a3))
+
 # [1.6.0](https://github.com/jgiovaresco/apim-samples/compare/1.5.0...1.6.0) (2023-01-13)
 
 
