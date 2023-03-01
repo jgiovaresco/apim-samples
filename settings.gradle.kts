@@ -6,6 +6,9 @@ dependencyResolutionManagement {
   versionCatalogs {
     create("libs") {
       version("annotation-api", "1.3.2")
+      version("avro", "1.11.0")
+      version("confluent", "5.3.0")
+      version("kotlin-faker", "1.13.0")
       version("grpc", "1.53.0")
       version("junit", "5.9.2")
       version("kotlin", "1.7.21")
@@ -17,8 +20,11 @@ dependencyResolutionManagement {
       version("strikt", "0.34.1")
       version("vertx", "4.3.6")
 
+      library("avro", "org.apache.avro", "avro").versionRef("avro")
       library("grpc-protobuf", "io.grpc", "grpc-protobuf").versionRef("grpc")
       library("grpc-services", "io.grpc", "grpc-services").versionRef("grpc")
+      library("kafka-serializer-avro", "io.confluent", "kafka-avro-serializer").versionRef("confluent")
+      library("kotlin-faker", "io.github.serpro69", "kotlin-faker").versionRef("kotlin-faker")
       library("logback-classic", "ch.qos.logback", "logback-classic").versionRef("logback")
       library("logback-core", "ch.qos.logback", "logback-core").versionRef("logback")
       library("javax-annotation-api", "javax.annotation", "javax.annotation-api").versionRef("annotation-api")
