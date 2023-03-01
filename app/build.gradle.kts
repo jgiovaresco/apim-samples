@@ -14,6 +14,14 @@ plugins {
 
 repositories {
   mavenCentral()
+  maven {
+    url = uri("https://packages.confluent.io/maven/")
+    name = "Confluent"
+    content {
+      includeGroup("io.confluent")
+      includeGroup("org.apache.kafka")
+    }
+  }
 }
 
 scmVersion {
@@ -47,6 +55,10 @@ dependencies {
   implementation(libs.bundles.grpc)
   implementation(libs.bundles.logback)
   implementation(libs.bundles.rx)
+
+  implementation(libs.avro)
+  implementation(libs.kafka.serializer.avro)
+  implementation(libs.kotlin.faker)
   implementation(libs.slf4j.api)
 
   testImplementation(libs.junit.jupiter.api)

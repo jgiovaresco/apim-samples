@@ -1,5 +1,7 @@
 package io.apim.samples.rest
 
+import io.apim.samples.avro.AvroSerDeFactoryImpl
+import io.apim.samples.avro.SerializationFormat
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.vertx.core.http.HttpHeaders
 import io.vertx.ext.web.client.WebClientOptions
@@ -11,19 +13,16 @@ import io.vertx.rxjava3.config.ConfigRetriever
 import io.vertx.rxjava3.core.Vertx
 import io.vertx.rxjava3.core.buffer.Buffer
 import io.vertx.rxjava3.ext.web.client.WebClient
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
+import org.apache.avro.Schema
+import org.apache.avro.generic.GenericRecord
+import org.apache.avro.util.Utf8
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
 import org.junit.jupiter.params.provider.ValueSource
 import strikt.api.expectThat
-import strikt.assertions.contains
-import strikt.assertions.containsExactly
-import strikt.assertions.isEqualTo
-import strikt.assertions.isNull
+import strikt.assertions.*
 import kotlin.io.path.Path
 
 @ExtendWith(VertxExtension::class)
@@ -285,4 +284,50 @@ class RestServerVerticleTest {
         }
     }
   }
+
+  @Nested
+  @ExtendWith(VertxExtension::class)
+  inner class AvroHandler {
+    @ParameterizedTest
+    @EnumSource(SerializationFormat::class)
+    fun `should return a serialized avro`(format: SerializationFormat) {
+      val schema = """
+      {
+        "type": "record",
+        "name": "Payment",
+        "fields": [
+            {
+                "name": "id",
+                "type": "string"
+            },
+            {
+                "name": "amount",
+                "type": "double"
+            }
+        ]
+      }
+      """.trimIndent()
+      val serde = AvroSerDeFactoryImpl().new(Schema.Parser().parse(schema), format)
+
+      client.post("/avro")
+        .putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json")
+        .sendBuffer(Buffer.buffer(schema))
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+
+          val avro = result.bodyAsBuffer().bytes
+          val data = serde.deserialize(avro)
+
+          expectThat(data).isNotNull().isA<GenericRecord>().and {
+            get { get("id") }.isNotNull().isA<Utf8>()
+            get { get("amount") }.isNotNull().isA<Double>()
+          }
+
+          true
+        }
+    }
+  }
+
 }

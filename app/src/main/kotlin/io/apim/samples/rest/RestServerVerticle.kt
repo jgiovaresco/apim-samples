@@ -38,6 +38,7 @@ class RestServerVerticle(
   private fun router(): Router = Router.router(vertx).let { router ->
     router.route().handler(BodyHandler.create())
     router.route("/echo").handler(::echoHandler)
+    router.route("/avro").handler(::avroHandler)
     router.route("/grpc*").handler(::protobufFileHandler)
     router.route("/health*").handler(HealthCheckHandler.createWithHealthChecks(healthChecks))
     router
