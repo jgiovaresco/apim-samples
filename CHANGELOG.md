@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/jgiovaresco/apim-samples/compare/1.7.0...1.8.0) (2023-03-02)
+
+
+### Features
+
+* avro endpoint ([da8ac55](https://github.com/jgiovaresco/apim-samples/commit/da8ac55626a8112e1c2950e1760aacd2ca64fc41))
+
 # [1.7.0](https://github.com/jgiovaresco/apim-samples/compare/1.6.0...1.7.0) (2023-01-22)
 
 
