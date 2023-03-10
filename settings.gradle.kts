@@ -13,7 +13,7 @@ dependencyResolutionManagement {
       version("junit", "5.9.2")
       version("kotlin", "1.7.21")
       version("logback", "1.4.5")
-      version("protobuf", "3.22.0")
+      version("protobuf", "3.22.2")
       version("rxjava", "3.1.6")
       version("rxkotlin", "3.0.1")
       version("slf4j", "2.0.6")
