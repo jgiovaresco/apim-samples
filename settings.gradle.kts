@@ -48,7 +48,7 @@ dependencyResolutionManagement {
       plugin("shadow", "com.github.johnrengelman.shadow").version("7.1.2")
       plugin("docker", "com.palantir.docker").version("0.34.0")
       plugin("axion", "pl.allegro.tech.build.axion-release").version("1.14.0")
-      plugin("protobuf", "com.google.protobuf").version("0.9.1")
+      plugin("protobuf", "com.google.protobuf").version("0.9.2")
     }
   }
 }
