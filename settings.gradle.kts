@@ -8,7 +8,7 @@ dependencyResolutionManagement {
       version("annotation-api", "1.3.2")
       version("avro", "1.11.1")
       version("confluent", "5.5.14")
-      version("kotlin-faker", "1.13.0")
+      version("kotlin-faker", "1.14.0")
       version("grpc", "1.53.0")
       version("junit", "5.9.2")
       version("kotlin", "1.8.10")
