@@ -4,6 +4,7 @@ import io.apim.samples.avro.AvroSerDeFactoryImpl
 import io.apim.samples.avro.SerializationFormat
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.vertx.core.http.HttpHeaders
+import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.client.WebClientOptions
 import io.vertx.junit5.VertxExtension
 import io.vertx.junit5.VertxTestContext
@@ -14,6 +15,7 @@ import io.vertx.rxjava3.core.Vertx
 import io.vertx.rxjava3.core.buffer.Buffer
 import io.vertx.rxjava3.ext.web.client.WebClient
 import org.apache.avro.Schema
+import org.apache.avro.generic.GenericData
 import org.apache.avro.generic.GenericRecord
 import org.apache.avro.util.Utf8
 import org.junit.jupiter.api.*
@@ -406,6 +408,153 @@ class RestServerVerticleTest {
             get { bodyAsJsonObject() }.and {
               get { getString("title") }.isEqualTo("Invalid output format")
               get { getString("detail") }.isEqualTo("Valid values are: avro, json")
+            }
+          }
+          true
+        }
+    }
+  }
+
+  @Nested
+  @ExtendWith(VertxExtension::class)
+  inner class AvroSerDeHandler {
+    private val schema = JsonObject("""
+      {
+        "type": "record",
+        "name": "Payment",
+        "fields": [
+            {
+                "name": "id",
+                "type": "string"
+            },
+            {
+                "name": "amount",
+                "type": "double"
+            }
+        ]
+      }
+      """.trimIndent()).toString()
+
+    @ParameterizedTest
+    @EnumSource(SerializationFormat::class)
+    fun `should return a serialized avro from a json body`(format: SerializationFormat) {
+      val serde = AvroSerDeFactoryImpl().new(Schema.Parser().parse(schema), format)
+      val json = json { obj("id" to "an-id", "amount" to 10.0) }
+
+      client.post("/avro/serde")
+        .addQueryParam("format", format.name)
+        .putHeader("X-Avro-Schema", schema)
+        .putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json")
+        .sendJsonObject(json)
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+          expectThat(result) {
+            get { statusCode() }.isEqualTo(200)
+            get { getHeader(HttpHeaders.CONTENT_TYPE.toString()) }.isEqualTo("avro/binary")
+          }
+
+          val avro = result.bodyAsBuffer().bytes
+          val data = serde.deserialize(avro)
+
+          expectThat(data).isNotNull().isA<GenericRecord>().and {
+            get { get("id").toString() }.isEqualTo("an-id")
+            get { get("amount") }.isEqualTo(10.0)
+          }
+
+          true
+        }
+    }
+
+    @ParameterizedTest
+    @EnumSource(SerializationFormat::class)
+    fun `should return a json from an avro body`(format: SerializationFormat) {
+      val serde = AvroSerDeFactoryImpl().new(Schema.Parser().parse(schema), format)
+      val datum = GenericData.Record(Schema.Parser().parse(schema)).apply {
+        put("id", "an-id")
+        put("amount", 10.0)
+      }
+
+      client.post("/avro/serde")
+        .addQueryParam("format", format.name)
+        .putHeader("X-Avro-Schema", schema)
+        .putHeader(HttpHeaders.CONTENT_TYPE.toString(), "avro/binary")
+        .sendBuffer(Buffer.buffer(serde.serialize(datum)))
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+          expectThat(result) {
+            get { statusCode() }.isEqualTo(200)
+            get { getHeader(HttpHeaders.CONTENT_TYPE.toString()) }.isEqualTo("application/json")
+            get { bodyAsJsonObject() }.and {
+              get { getString("id") }.isEqualTo("an-id")
+              get { getDouble("amount") }.isEqualTo(10.0)
+            }
+          }
+          true
+        }
+    }
+
+    @Test
+    fun `should return an error when no schema is provided`() {
+      val json = json { obj("id" to "an-id", "amount" to 10.0) }
+
+      client.post("/avro/serde")
+        .sendJsonObject(json)
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+          expectThat(result) {
+            get { statusCode() }.isEqualTo(400)
+            get { bodyAsJsonObject() }.and {
+              get { getString("title") }.isEqualTo("Avro schema required in X-Avro-Schema header")
+            }
+          }
+          true
+        }
+    }
+
+    @Test
+    fun `should return an error when schema is invalid`() {
+      val json = json { obj("id" to "an-id", "amount" to 10.0) }
+
+      client.post("/avro/serde")
+        .putHeader("X-Avro-Schema", """{  "type  } """.trimIndent())
+        .sendJsonObject(json)
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+          expectThat(result) {
+            get { statusCode() }.isEqualTo(400)
+            get { bodyAsJsonObject() }.and {
+              get { getString("title") }.isEqualTo("Invalid avro schema")
+            }
+          }
+          true
+        }
+    }
+
+    @Test
+    fun `should return an error when incorrect serialization format`() {
+      val json = json { obj("id" to "an-id", "amount" to 10.0) }
+
+      client.post("/avro/serde")
+        .putHeader("X-Avro-Schema", schema)
+        .addQueryParam("format", "unknown")
+        .sendJsonObject(json)
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+          expectThat(result) {
+            get { statusCode() }.isEqualTo(400)
+            get { bodyAsJsonObject() }.and {
+              get { getString("title") }.isEqualTo("Invalid format")
+              get { getString("detail") }.isEqualTo("Valid values are: confluent, simple")
             }
           }
           true
