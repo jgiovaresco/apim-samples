@@ -288,10 +288,7 @@ class RestServerVerticleTest {
   @Nested
   @ExtendWith(VertxExtension::class)
   inner class AvroGeneratorHandler {
-    @ParameterizedTest
-    @EnumSource(SerializationFormat::class)
-    fun `should return a serialized avro`(format: SerializationFormat) {
-      val schema = """
+    private val schema = """
       {
         "type": "record",
         "name": "Payment",
@@ -307,6 +304,10 @@ class RestServerVerticleTest {
         ]
       }
       """.trimIndent()
+
+    @ParameterizedTest
+    @EnumSource(SerializationFormat::class)
+    fun `should return a serialized avro`(format: SerializationFormat) {
       val serde = AvroSerDeFactoryImpl().new(Schema.Parser().parse(schema), format)
 
       client.post("/avro/generate")
@@ -329,6 +330,86 @@ class RestServerVerticleTest {
           true
         }
     }
-  }
 
+    @Test
+    fun `should return a json matching schema provided`() {
+      client.post("/avro/generate")
+        .addQueryParam("output", "json")
+        .putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json")
+        .sendBuffer(Buffer.buffer(schema))
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+
+          val json = result.bodyAsJsonObject()
+
+          expectThat(json).isNotNull().and {
+            get { getString("id") }.isNotNull().isA<String>()
+            get { getDouble("amount") }.isNotNull().isA<Double>()
+          }
+
+          true
+        }
+    }
+
+    @Test
+    fun `should return an error when no schema is provided`() {
+      client.post("/avro/generate")
+        .putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json")
+        .sendBuffer(Buffer.buffer())
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+          expectThat(result) {
+            get { statusCode() }.isEqualTo(400)
+            get { bodyAsJsonObject() }.and {
+              get { getString("title") }.isEqualTo("Provide an avro schema")
+            }
+          }
+          true
+        }
+    }
+
+    @Test
+    fun `should return an error when schema is invalid`() {
+      client.post("/avro/generate")
+        .putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json")
+        .sendBuffer(Buffer.buffer("""{  "type  } """.trimIndent()))
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+          expectThat(result) {
+            get { statusCode() }.isEqualTo(400)
+            get { bodyAsJsonObject() }.and {
+              get { getString("title") }.isEqualTo("Invalid avro schema")
+            }
+          }
+          true
+        }
+    }
+
+    @Test
+    fun `should return an error when output format is not supported`() {
+      client.post("/avro/generate")
+        .addQueryParam("output", "unknown")
+        .putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json")
+        .sendBuffer(Buffer.buffer(schema))
+        .test()
+        .await()
+        .assertNoErrors()
+        .assertValue { result ->
+          expectThat(result) {
+            get { statusCode() }.isEqualTo(400)
+            get { bodyAsJsonObject() }.and {
+              get { getString("title") }.isEqualTo("Invalid output format")
+              get { getString("detail") }.isEqualTo("Valid values are: avro, json")
+            }
+          }
+          true
+        }
+    }
+  }
 }
