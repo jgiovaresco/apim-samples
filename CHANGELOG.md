@@ -1,3 +1,17 @@
+# [2.0.0](https://github.com/jgiovaresco/apim-samples/compare/1.8.0...2.0.0) (2023-04-13)
+
+
+### Features
+
+* add an avro serde endpoint ([c1a6d30](https://github.com/jgiovaresco/apim-samples/commit/c1a6d30bc3819f44cccd3bcac4f50e9008ceb558))
+* improve generate endpoint to generate a json matching a schema ([278d8e0](https://github.com/jgiovaresco/apim-samples/commit/278d8e0755a4231ba5000aed9a914ae4993981a4))
+* move /avro route under /avro/generate ([5d57ef1](https://github.com/jgiovaresco/apim-samples/commit/5d57ef1f0508352b43f3c9b8c1b475dacd35d4b9))
+
+
+### BREAKING CHANGES
+
+* The route /avro has been moved to /avro/generate
+
 # [1.8.0](https://github.com/jgiovaresco/apim-samples/compare/1.7.0...1.8.0) (2023-03-02)
 
 
