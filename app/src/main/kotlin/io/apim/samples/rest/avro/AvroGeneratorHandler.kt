@@ -1,8 +1,9 @@
-package io.apim.samples.rest
+package io.apim.samples.rest.avro
 
 import io.apim.samples.avro.AvroSerDeFactoryImpl
 import io.apim.samples.avro.SerializationFormat
 import io.apim.samples.avro.generate
+import io.apim.samples.rest.isJson
 import io.vertx.core.http.HttpHeaders
 import io.vertx.ext.web.impl.ParsableMIMEValue
 import io.vertx.kotlin.core.json.obj
@@ -13,7 +14,7 @@ import org.apache.avro.SchemaParseException
 
 val serdeFactory = AvroSerDeFactoryImpl()
 
-fun avroHandler(ctx: RoutingContext) {
+fun avroGeneratorHandler(ctx: RoutingContext) {
   val contentType = (ctx.parsedHeaders().delegate.contentType() as ParsableMIMEValue).forceParse()
 
   if (!contentType.isJson()) {

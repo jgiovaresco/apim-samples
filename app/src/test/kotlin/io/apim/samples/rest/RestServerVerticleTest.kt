@@ -287,7 +287,7 @@ class RestServerVerticleTest {
 
   @Nested
   @ExtendWith(VertxExtension::class)
-  inner class AvroHandler {
+  inner class AvroGeneratorHandler {
     @ParameterizedTest
     @EnumSource(SerializationFormat::class)
     fun `should return a serialized avro`(format: SerializationFormat) {
@@ -309,7 +309,8 @@ class RestServerVerticleTest {
       """.trimIndent()
       val serde = AvroSerDeFactoryImpl().new(Schema.Parser().parse(schema), format)
 
-      client.post("/avro")
+      client.post("/avro/generate")
+        .addQueryParam("format", format.name)
         .putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json")
         .sendBuffer(Buffer.buffer(schema))
         .test()
