@@ -2,6 +2,7 @@ package io.apim.samples.rest
 
 import io.apim.samples.httpPort
 import io.apim.samples.rest.avro.avroGeneratorHandler
+import io.apim.samples.rest.avro.avroSerDeHandler
 import io.reactivex.rxjava3.core.Completable
 import io.vertx.rxjava3.config.ConfigRetriever
 import io.vertx.rxjava3.core.AbstractVerticle
@@ -40,6 +41,7 @@ class RestServerVerticle(
     router.route().handler(BodyHandler.create())
     router.route("/echo").handler(::echoHandler)
     router.route("/avro/generate").handler(::avroGeneratorHandler)
+    router.route("/avro/serde").handler(::avroSerDeHandler)
     router.route("/grpc*").handler(::protobufFileHandler)
     router.route("/health*").handler(HealthCheckHandler.createWithHealthChecks(healthChecks))
     router
