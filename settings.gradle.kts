@@ -45,10 +45,11 @@ dependencyResolutionManagement {
       bundle("strikt", listOf("strikt-core"))
 
       plugin("kotlin-jvm", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
-      plugin("shadow", "com.github.johnrengelman.shadow").version("7.1.2")
+      plugin("shadow", "com.github.johnrengelman.shadow").version("8.1.1")
       plugin("docker", "com.palantir.docker").version("0.35.0")
       plugin("axion", "pl.allegro.tech.build.axion-release").version("1.15.0")
       plugin("protobuf", "com.google.protobuf").version("0.9.2")
+      plugin("helm", "io.github.bullshit.helmng").version("0.1.0")
     }
   }
 }

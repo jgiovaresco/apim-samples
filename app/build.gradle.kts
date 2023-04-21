@@ -35,9 +35,9 @@ val jarClassifier = "fat"
 val mainVerticleName = "io.apim.samples.MainVerticle"
 val launcherClassName = "io.vertx.core.Launcher"
 val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions.jvmTarget = "11"
+compileKotlin.kotlinOptions.jvmTarget = "17"
 val compileTestKotlin: KotlinCompile by tasks
-compileTestKotlin.kotlinOptions.jvmTarget = "11"
+compileTestKotlin.kotlinOptions.jvmTarget = "17"
 
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
