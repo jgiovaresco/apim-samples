@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/jgiovaresco/apim-samples/compare/2.0.0...2.0.1) (2023-04-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency io.confluent:kafka-avro-serializer to v7 ([1899570](https://github.com/jgiovaresco/apim-samples/commit/1899570dadfba6f9265c2f67f8c4b9849e2f1673))
+
 # [2.0.0](https://github.com/jgiovaresco/apim-samples/compare/1.8.0...2.0.0) (2023-04-13)
 
 
