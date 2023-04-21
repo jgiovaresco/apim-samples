@@ -1,3 +1,6 @@
 plugins {
-  id("org.unbroken-dome.helm") version "1.7.0"
+  alias(libs.plugins.axion)
+  alias(libs.plugins.helm)
 }
+
+project.version = scmVersion.version
