@@ -1,6 +1,18 @@
 rootProject.name = "apim-samples"
 include("app")
+include("app-quarkus")
 include("helm")
+
+//pluginManagement {
+//  repositories {
+//    mavenCentral()
+//    gradlePluginPortal()
+//    mavenLocal()
+//
+//    plugins {
+//      id("io.quarkus") version "2.16.6.Final"
+//    }
+//}
 
 dependencyResolutionManagement {
   versionCatalogs {
@@ -13,7 +25,9 @@ dependencyResolutionManagement {
       version("junit", "5.10.1")
       version("kotlin", "1.9.22")
       version("logback", "1.4.14")
+      version("mutiny-clients", "3.3.0")
       version("protobuf", "3.25.2")
+      version("quarkus", "3.6.6")
       version("rxjava", "3.1.8")
       version("rxkotlin", "3.0.1")
       version("slf4j", "2.0.11")
@@ -30,10 +44,12 @@ dependencyResolutionManagement {
       library("javax-annotation-api", "javax.annotation", "javax.annotation-api").versionRef("annotation-api")
       library("junit-jupiter-api", "org.junit.jupiter", "junit-jupiter-api").versionRef("junit")
       library("junit-jupiter-engine", "org.junit.jupiter", "junit-jupiter-engine").versionRef("junit")
+      library("mutiny-clients-bom", "io.smallrye.reactive", "vertx-mutiny-clients-bom").versionRef("mutiny-clients")
       library("protobuf-java", "com.google.protobuf", "protobuf-java").versionRef("protobuf")
       library("protobuf-kotlin", "com.google.protobuf", "protobuf-kotlin").versionRef("protobuf")
       library("protobuf-compiler", "com.google.protobuf", "protoc").versionRef("protobuf")
       library("protoc-gen-java", "io.grpc", "protoc-gen-grpc-java").versionRef("grpc")
+      library("quarkus-bom", "io.quarkus.platform", "quarkus-bom").versionRef("quarkus")
       library("rxjava3", "io.reactivex.rxjava3", "rxjava").versionRef("rxjava")
       library("rxkotlin", "io.reactivex.rxjava3", "rxkotlin").versionRef("rxkotlin")
       library("strikt-core", "io.strikt", "strikt-core").versionRef("strikt")
@@ -44,12 +60,14 @@ dependencyResolutionManagement {
       bundle("rx", listOf("rxjava3", "rxkotlin"))
       bundle("strikt", listOf("strikt-core"))
 
-      plugin("kotlin-jvm", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
-      plugin("shadow", "com.github.johnrengelman.shadow").version("8.1.1")
-      plugin("docker", "com.palantir.docker").version("0.35.0")
       plugin("axion", "pl.allegro.tech.build.axion-release").version("1.16.1")
-      plugin("protobuf", "com.google.protobuf").version("0.9.4")
+      plugin("docker", "com.palantir.docker").version("0.35.0")
       plugin("helm", "io.github.bullshit.helmng").version("0.1.0")
+      plugin("kotlin-jvm", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
+      plugin("kotlin-allopen", "org.jetbrains.kotlin.plugin.allopen").versionRef("kotlin")
+      plugin("protobuf", "com.google.protobuf").version("0.9.4")
+      plugin("quarkus", "io.quarkus").versionRef("quarkus")
+      plugin("shadow", "com.github.johnrengelman.shadow").version("8.1.1")
     }
   }
 }
