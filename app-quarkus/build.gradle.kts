@@ -33,6 +33,7 @@ dependencies {
   implementation("io.quarkus:quarkus-reactive-routes")
   implementation("io.quarkus:quarkus-resteasy-reactive")
   implementation("io.quarkus:quarkus-vertx")
+  implementation("io.quarkus:quarkus-websockets")
   implementation("io.vertx:vertx-lang-kotlin")
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
@@ -40,7 +41,6 @@ dependencies {
   testImplementation(libs.bundles.strikt)
   testImplementation("io.quarkus:quarkus-junit5")
   testImplementation("io.smallrye.reactive:smallrye-mutiny-vertx-web-client")
-  testImplementation("io.vertx:vertx-junit5")
 
   testRuntimeOnly(libs.junit.jupiter.engine)
 }
