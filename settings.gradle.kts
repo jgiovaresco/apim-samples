@@ -10,7 +10,7 @@ dependencyResolutionManagement {
       version("confluent", "7.3.3")
       version("kotlin-faker", "1.14.0")
       version("grpc", "1.54.1")
-      version("junit", "5.9.2")
+      version("junit", "5.9.3")
       version("kotlin", "1.8.21")
       version("logback", "1.4.7")
       version("protobuf", "3.22.3")
