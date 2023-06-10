@@ -1127,7 +1127,7 @@ __metadata:
     pinst: 3.0.0
     prettier: 2.8.8
     prettier-plugin-packagejson: 2.4.3
-    semantic-release: 21.0.4
+    semantic-release: 21.0.5
   languageName: unknown
   linkType: soft
 
@@ -3517,12 +3517,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^4.1.0":
-  version: 4.2.5
-  resolution: "marked@npm:4.2.5"
+"marked@npm:^5.0.0":
+  version: 5.0.5
+  resolution: "marked@npm:5.0.5"
   bin:
     marked: bin/marked.js
-  checksum: dd7da20a3983c66b516463fad5dc8d15dc70e137d20b6dc491e134f671e84bd2ed5f859e2c35f21e56830a122e4356b9e574bcde49b72b7ad6bc121a215a1a98
+  checksum: 0148b62895e93dff7f209469ec1d0d5cbb52e4d974c6ed02d35f9feaf75580c2daf16610486b0c36780c75d893b14103e74c8737f9921e54b3bd2b4d1dc51039
   languageName: node
   linkType: hard
 
@@ -5005,9 +5005,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semantic-release@npm:21.0.4":
-  version: 21.0.4
-  resolution: "semantic-release@npm:21.0.4"
+"semantic-release@npm:21.0.5":
+  version: 21.0.5
+  resolution: "semantic-release@npm:21.0.5"
   dependencies:
     "@semantic-release/commit-analyzer": ^10.0.0
     "@semantic-release/error": ^4.0.0
@@ -5026,7 +5026,7 @@ __metadata:
     hook-std: ^3.0.0
     hosted-git-info: ^6.0.0
     lodash-es: ^4.17.21
-    marked: ^4.1.0
+    marked: ^5.0.0
     marked-terminal: ^5.1.1
     micromatch: ^4.0.2
     p-each-series: ^3.0.0
@@ -5039,7 +5039,7 @@ __metadata:
     yargs: ^17.5.1
   bin:
     semantic-release: bin/semantic-release.js
-  checksum: bbeabb5d8eea8f840922964f63f3ef6921de4a079dffd507c03404fba842e64457774035836391f706788b507d5f926b60424c20b7e19f81d9677e773e74f08e
+  checksum: 9b45d24392c24a7f147e4560d36a0f70447b719b0e7371c400834b9a1a98f4b6a3e23420480505f03b0b690c2eaaea2db53c870435a28f8946721ad96f63d3e1
   languageName: node
   linkType: hard
 
