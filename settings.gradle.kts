@@ -12,7 +12,7 @@ dependencyResolutionManagement {
       version("grpc", "1.55.1")
       version("junit", "5.9.3")
       version("kotlin", "1.8.22")
-      version("logback", "1.4.7")
+      version("logback", "1.4.8")
       version("protobuf", "3.23.2")
       version("rxjava", "3.1.6")
       version("rxkotlin", "3.0.1")
