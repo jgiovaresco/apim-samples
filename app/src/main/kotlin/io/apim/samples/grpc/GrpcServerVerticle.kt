@@ -42,6 +42,7 @@ class GrpcServerVerticle(private val configRetriever: ConfigRetriever) : Abstrac
 
       val server = GrpcServer.server(vertx.delegate)
       GrpcServiceBridge.bridge(RouteGuideService(features)).bind(server)
+      GrpcServiceBridge.bridge(GreeterService()).bind(server)
       server
     }
 }
