@@ -47,7 +47,7 @@ dependencyResolutionManagement {
       plugin("kotlin-jvm", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
       plugin("shadow", "com.github.johnrengelman.shadow").version("8.1.1")
       plugin("docker", "com.palantir.docker").version("0.35.0")
-      plugin("axion", "pl.allegro.tech.build.axion-release").version("1.15.3")
+      plugin("axion", "pl.allegro.tech.build.axion-release").version("1.16.1")
       plugin("protobuf", "com.google.protobuf").version("0.9.4")
       plugin("helm", "io.github.bullshit.helmng").version("0.1.0")
     }
