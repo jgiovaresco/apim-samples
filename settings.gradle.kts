@@ -16,7 +16,7 @@ dependencyResolutionManagement {
       version("protobuf", "3.25.2")
       version("rxjava", "3.1.6")
       version("rxkotlin", "3.0.1")
-      version("slf4j", "2.0.7")
+      version("slf4j", "2.0.11")
       version("strikt", "0.34.1")
       version("vertx", "4.3.6")
 
