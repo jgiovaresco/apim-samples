@@ -235,7 +235,7 @@ class RestServerVerticleTest {
         .assertNoErrors()
         .assertValue { result ->
           expectThat(result.bodyAsJsonObject()) {
-            get { getJsonArray("protoFiles").list }.containsExactly("http://localhost:8888/grpc/route_guide.proto")
+            get { getJsonArray("protoFiles").list }.containsExactlyInAnyOrder("http://localhost:8888/grpc/route_guide.proto", "http://localhost:8888/grpc/helloworld.proto")
           }
           true
         }
