@@ -14,7 +14,7 @@ dependencyResolutionManagement {
       version("kotlin", "1.9.0")
       version("logback", "1.4.14")
       version("protobuf", "3.25.2")
-      version("rxjava", "3.1.6")
+      version("rxjava", "3.1.8")
       version("rxkotlin", "3.0.1")
       version("slf4j", "2.0.7")
       version("strikt", "0.34.1")
