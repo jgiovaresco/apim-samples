@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/jgiovaresco/apim-samples/compare/2.0.1...2.1.0) (2024-01-17)
+
+
+### Features
+
+* add another gRPC service ([7bfe507](https://github.com/jgiovaresco/apim-samples/commit/7bfe50712e912fda134b526d66507558dfdd5292))
+
 ## [2.0.1](https://github.com/jgiovaresco/apim-samples/compare/2.0.0...2.0.1) (2023-04-21)
 
 
