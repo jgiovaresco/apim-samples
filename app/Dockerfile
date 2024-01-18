@@ -1,4 +1,4 @@
-FROM graviteeio/java:17
+FROM graviteeio/java:21
 
 ARG BUILD_VERSION
 ENV JAR_FILE=apim-samples-${BUILD_VERSION}-fat.jar
