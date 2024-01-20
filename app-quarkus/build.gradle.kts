@@ -28,6 +28,9 @@ dependencies {
   implementation(enforcedPlatform(libs.quarkus.bom))
   implementation(enforcedPlatform(libs.mutiny.clients.bom))
 
+  implementation(libs.avro)
+  implementation(libs.kafka.serializer.avro)
+  implementation(libs.kotlin.faker)
   implementation(libs.slf4j.api)
   implementation("io.quarkus:quarkus-arc")
   implementation("io.quarkus:quarkus-grpc")
@@ -41,6 +44,8 @@ dependencies {
 
   testImplementation(libs.junit.jupiter.api)
   testImplementation(libs.bundles.strikt)
+  testImplementation("io.rest-assured:rest-assured")
+  testImplementation("io.rest-assured:kotlin-extensions")
   testImplementation("io.quarkus:quarkus-junit5")
   testImplementation("io.smallrye.reactive:smallrye-mutiny-vertx-web-client")
 
