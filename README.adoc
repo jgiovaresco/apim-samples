@@ -1,38 +1,37 @@
 = apim samples
 
-image:https://img.shields.io/badge/vert.x-4.3.6-purple.svg[link="https://vertx.io"]
+This application provides an API sample
+that I use to play with https://github.com/gravitee-io/gravitee-api-management[Gravitee APIM].
 
-This application provide API sample that I use to play with https://github.com/gravitee-io/gravitee-api-management[Gravite APIM].
 
 == Building
 
-To launch your tests:
+To launch tests:
 ----
-./gradlew clean test
+./gradlew test
 ----
 
-To run your application:
+To run application in Dev mode:
 ----
-./gradlew clean run
+./gradlew --console=plain quarkusDev
+----
+
+To build the application:
+----
+./gradlew build docker
 ----
 
 == Configuration
 
-Configuration is provided through environment variables. Available variables are defined
-link:app/src/main/kotlin/io/apim/samples/Configuration.kt[here]
-
-[,java]
-----
-include::app/src/main/kotlin/io/apim/samples/Configuration.kt[lines=2..]
-----
+Quarkus handles the configuration of the application.
 
 == Available endpoints
 
-It starts 3 http servers
+It starts a single http server to handle
 
-- one used to handle regular HTTP request. (default port 8888)
-- one used to handle WebSockets. (default port 8890)
-- one used to handle GRPC. (default port 8892)
+- regular HTTP request.
+- WebSockets.
+- GRPC services.
 
 === HTTP /echo
 
@@ -77,7 +76,7 @@ This endpoint can receive WebSocket request. It will copy the request received i
 
 Using https://github.com/vi/websocat[websocat]:
 ----
-websocat -1 ws://localhost:8890/ws/echo
+websocat -1 ws://localhost:8888/ws/echo
 {"message": "Hello"}
 ----
 
@@ -95,28 +94,31 @@ will respond
 
 === GRPC
 
-The server provide an adapted example of the Route Guide from https://github.com/grpc/grpc-java/tree/master/examples[gRPC examples]
+The application provides 2 gRPC services adapted from https://github.com/grpc/grpc-java/tree/master/examples[gRPC examples]:
 
-The service shows the various kind of gRPC service calls:
+- the Route Guide service
+- the Greeter service
+
+The Route Guide service shows the various kind of gRPC service calls:
 
 - simple RPC
 - server-side streaming RPC
 - client-side streaming RPC
 - bidirectional streaming RPC
 
-The proto file is available at
+Proto files are available at
 
-- link:app/src/main/resources/grpc/route_guide.proto[here]
-- or it can be downloaded using the HTTP server: http://localhost:8888/grpc/route_guide.proto
+- link:app-quarkus/src/main/proto[here]
+- or it can be downloaded using the HTTP server: http://localhost:8888/proto/route_guide.proto or http://localhost:8888/proto/helloworld.proto
 
 ==== Example
 
 Using https://github.com/fullstorydev/grpcurl[grpcurl].
-(The server does not expose Reflection service, therefore we need to provide the protofile to the client)
+(The server exposes Reflection service, therefore no need to provide the protofile to the client)
 
 [source,bash]
 ----
-grpcurl -d '{"latitude": 413628156, "longitude": -749015468}' -import-path app/src/main/resources/grpc -proto route_guide.proto -plaintext localhost:8892 routeguide.RouteGuide/GetFeature
+grpcurl -d '{"latitude": 413628156, "longitude": -749015468}' -plaintext localhost:8888 routeguide.RouteGuide/GetFeature
 ----
 
 will respond
