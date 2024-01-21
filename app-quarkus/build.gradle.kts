@@ -40,6 +40,7 @@ dependencies {
   implementation("io.quarkus:quarkus-kotlin")
   implementation("io.quarkus:quarkus-reactive-routes")
   implementation("io.quarkus:quarkus-resteasy-reactive")
+  implementation("io.quarkus:quarkus-smallrye-health")
   implementation("io.quarkus:quarkus-vertx")
   implementation("io.quarkus:quarkus-websockets")
   implementation("io.vertx:vertx-lang-kotlin")
