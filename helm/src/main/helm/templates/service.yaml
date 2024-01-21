@@ -11,14 +11,6 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
-    - port: {{ .Values.service.port.websocket }}
-      targetPort: websocket
-      protocol: TCP
-      name: websocket
-    - port: {{ .Values.service.port.grpc }}
-      targetPort: grpc
-      protocol: TCP
-      name: grpc
 
   selector:
     {{- include "app.selectorLabels" . | nindent 4 }}

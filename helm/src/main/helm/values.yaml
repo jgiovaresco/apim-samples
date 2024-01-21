@@ -20,13 +20,13 @@ securityContext:
 probes:
   liveness:
     httpGet:
-      path: /health
+      path: /q/health/live
       port: http
     periodSeconds: 10
     failureThreshold: 3
   readiness:
     httpGet:
-      path: /health
+      path: /q/health/ready
       port: http
     periodSeconds: 10
     failureThreshold: 3
@@ -69,7 +69,3 @@ affinity: {}
 app:
   http:
     port: 8080
-  websocket:
-    port: 8090
-  grpc:
-    port: 9000
