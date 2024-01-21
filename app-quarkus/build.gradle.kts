@@ -1,5 +1,8 @@
+import com.palantir.gradle.docker.DockerExtension
+
 plugins {
   alias(libs.plugins.axion)
+  alias(libs.plugins.docker)
   alias(libs.plugins.kotlin.allopen)
   alias(libs.plugins.kotlin.jvm)
   alias(libs.plugins.quarkus)
@@ -79,4 +82,10 @@ tasks.register("copyProto", Copy::class.java) {
 
 tasks.withType<ProcessResources> {
   dependsOn("copyProto")
+}
+
+configure<DockerExtension> {
+  name = "${rootProject.name}:${project.version}"
+  files(tasks.findByName("quarkusBuild")?.outputs?.files)
+  tag("DockerHub", "jgiovaresco/${name}")
 }
