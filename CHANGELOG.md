@@ -1,3 +1,17 @@
+# [3.0.0](https://github.com/jgiovaresco/apim-samples/compare/2.1.0...3.0.0) (2024-01-21)
+
+
+### Code Refactoring
+
+* move to quarkus ([#165](https://github.com/jgiovaresco/apim-samples/issues/165)) ([4d9b917](https://github.com/jgiovaresco/apim-samples/commit/4d9b9171c3992eb4803cb1e727a623e7c6708016))
+
+
+### BREAKING CHANGES
+
+* WebSocket moved to HTTP server instead of a dedicated
+server
+gRPC server moved to HTTP server instead of a dedicated server
+
 # [2.1.0](https://github.com/jgiovaresco/apim-samples/compare/2.0.1...2.1.0) (2024-01-17)
 
 
