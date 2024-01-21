@@ -1,18 +1,6 @@
 rootProject.name = "apim-samples"
-include("app")
 include("app-quarkus")
 include("helm")
-
-//pluginManagement {
-//  repositories {
-//    mavenCentral()
-//    gradlePluginPortal()
-//    mavenLocal()
-//
-//    plugins {
-//      id("io.quarkus") version "2.16.6.Final"
-//    }
-//}
 
 dependencyResolutionManagement {
   versionCatalogs {
