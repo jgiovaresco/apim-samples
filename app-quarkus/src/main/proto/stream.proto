@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.stream";
+option java_outer_classname = "StreamProto";
+option objc_class_prefix = "ST";
+
+package stream;
+
+// Interface exported by the server.
+service StreamService {
+  // A server-to-client streaming RPC.
+  //
+  // Stream a number of message configured in the request with a delay between them.
+  rpc stream(StreamRequest) returns (stream StreamReply) {}
+}
+
+// A latitude-longitude rectangle, represented as two diagonally opposite
+// points "lo" and "hi".
+message StreamRequest {
+  // Delay in seconds between 2 replies
+  uint32 delayInSeconds = 1;
+  uint32 numberOfReplies = 2;
+}
+
+// A feature names something at a given point.
+//
+// If a feature could not be named, the name is empty.
+message StreamReply {
+  // The name of the feature.
+  int64 timestamp = 1;
+
+  // The point where the feature is detected.
+  string message = 2;
+}
