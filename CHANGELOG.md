@@ -1,3 +1,12 @@
+# [3.1.0](https://github.com/jgiovaresco/apim-samples/compare/3.0.0...3.1.0) (2024-01-22)
+
+
+### Features
+
+* add a new gRPC service StreamService ([418a2f0](https://github.com/jgiovaresco/apim-samples/commit/418a2f0d12452c51d9b61232b4f2e867c8a07976))
+* configure listening on all network interfaces by default ([fca17b0](https://github.com/jgiovaresco/apim-samples/commit/fca17b02cff5136b2e2e7a878477e01a55e01140))
+* enable http access logs by default ([e02beb6](https://github.com/jgiovaresco/apim-samples/commit/e02beb6119da322d44df16e108fabd07cb04802c))
+
 # [3.0.0](https://github.com/jgiovaresco/apim-samples/compare/2.1.0...3.0.0) (2024-01-21)
 
 
