@@ -1101,7 +1101,7 @@ __metadata:
     "@semantic-release/changelog": "npm:6.0.3"
     "@semantic-release/exec": "npm:6.0.3"
     "@semantic-release/git": "npm:10.0.1"
-    husky: "npm:9.0.4"
+    husky: "npm:9.0.5"
     is-ci: "npm:3.0.1"
     lint-staged: "npm:15.2.0"
     pinst: "npm:3.0.0"
@@ -2479,12 +2479,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:9.0.4":
-  version: 9.0.4
-  resolution: "husky@npm:9.0.4"
+"husky@npm:9.0.5":
+  version: 9.0.5
+  resolution: "husky@npm:9.0.5"
   bin:
     husky: bin.js
-  checksum: 8fe262d9b9bd5f3da1b6a31540667ac21874fa48123c10030c7827c5ca5f1b4044de75ee3dd57db4ba0ef23147b07e6078b561bed3619d98208b15700ffb0e0e
+  checksum: 699294459d3147cebcda13872a680a8b7fa8b71bcb28c0f3b932f2f60501b6f004d6e84003b0cf7373fe62efcf869eee976a4471515914d012a259e1f5d5eb97
   languageName: node
   linkType: hard
 
