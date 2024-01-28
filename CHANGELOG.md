@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/jgiovaresco/apim-samples/compare/3.1.0...3.2.0) (2024-01-28)
+
+
+### Features
+
+* add a GraphQL endpoint ([35ffbfd](https://github.com/jgiovaresco/apim-samples/commit/35ffbfdb845701653967c39c2ff70741729414a7))
+
 # [3.1.0](https://github.com/jgiovaresco/apim-samples/compare/3.0.0...3.1.0) (2024-01-22)
 
 
