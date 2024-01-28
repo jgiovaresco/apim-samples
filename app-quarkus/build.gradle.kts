@@ -36,6 +36,7 @@ dependencies {
   implementation(libs.kotlin.faker)
   implementation(libs.slf4j.api)
   implementation("io.quarkus:quarkus-arc")
+  implementation("io.quarkus:quarkus-smallrye-graphql")
   implementation("io.quarkus:quarkus-grpc")
   implementation("io.quarkus:quarkus-kotlin")
   implementation("io.quarkus:quarkus-reactive-routes")
@@ -50,6 +51,7 @@ dependencies {
   testImplementation(libs.bundles.strikt)
   testImplementation("io.rest-assured:rest-assured")
   testImplementation("io.rest-assured:kotlin-extensions")
+  testImplementation("io.quarkus:quarkus-smallrye-graphql-client")
   testImplementation("io.quarkus:quarkus-junit5")
   testImplementation("io.smallrye.reactive:smallrye-mutiny-vertx-web-client")
 

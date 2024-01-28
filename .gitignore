@@ -193,3 +193,5 @@ nbdist/
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+
+.bruno
