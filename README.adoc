@@ -133,3 +133,7 @@ will respond
   }
 }
 ----
+
+=== GraphQL
+
+The application provides a GraphQL endpoint. It exposes the schema through http://localhost:8888/graphql/schema.graphql
