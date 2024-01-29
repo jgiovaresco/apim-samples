@@ -1,3 +1,10 @@
+# [3.3.0](https://github.com/jgiovaresco/apim-samples/compare/3.2.1...3.3.0) (2024-01-29)
+
+
+### Features
+
+* improve graphql endpoint to accept limit param list queries ([1d7e81d](https://github.com/jgiovaresco/apim-samples/commit/1d7e81d760b9ac10cd42ac3c32d8694068b3bcac))
+
 ## [3.2.1](https://github.com/jgiovaresco/apim-samples/compare/3.2.0...3.2.1) (2024-01-29)
 
 
