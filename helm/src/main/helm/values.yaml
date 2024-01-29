@@ -35,8 +35,6 @@ service:
   type: ClusterIP
   port:
     http: 80
-    websocket: 8000
-    grpc: 9000
 
 ingress:
   http:
@@ -68,4 +66,4 @@ affinity: {}
 
 app:
   http:
-    port: 8080
+    port: 8888
