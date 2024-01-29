@@ -1,6 +1,6 @@
 apiVersion: v2
 name: apim-samples
-version: 3.2.0
-appVersion: "3.2.0"
+version: 3.2.1
+appVersion: "3.2.1"
 description: A Helm chart to deploy apim-samples in Kubernetes
 type: application

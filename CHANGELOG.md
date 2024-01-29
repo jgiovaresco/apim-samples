@@ -1,3 +1,10 @@
+## [3.2.1](https://github.com/jgiovaresco/apim-samples/compare/3.2.0...3.2.1) (2024-01-29)
+
+
+### Bug Fixes
+
+* helm default values ([ff3a65f](https://github.com/jgiovaresco/apim-samples/commit/ff3a65fcfc589ede466747f8c1a9dea9fb6b7dba))
+
 # [3.2.0](https://github.com/jgiovaresco/apim-samples/compare/3.1.0...3.2.0) (2024-01-28)
 
 
