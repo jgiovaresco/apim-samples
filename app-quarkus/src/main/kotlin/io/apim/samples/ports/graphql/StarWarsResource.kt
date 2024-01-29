@@ -14,7 +14,9 @@ class StarWarsResource {
 
   @Query("allFilms")
   @Description("Get all films")
-  fun getAllFilms(): List<Film> = starWarsQueryService.getFilms()
+  fun getAllFilms(@Name("limit") limit: Int?): List<Film> {
+    return starWarsQueryService.getFilms(limit)
+  }
 
   @Query
   @Description("Get a film by id")
@@ -22,7 +24,7 @@ class StarWarsResource {
 
   @Query("allPlanets")
   @Description("Get all planets")
-  fun getAllPlanets(): List<Planet> = starWarsQueryService.getPlanets()
+  fun getAllPlanets(@Name("limit") limit: Int?): List<Planet> = starWarsQueryService.getPlanets(limit)
 
   @Query
   @Description("Get a planet by id")
@@ -30,7 +32,7 @@ class StarWarsResource {
 
   @Query("allPeople")
   @Description("Get all people")
-  fun getAllPeople(): List<Person> = starWarsQueryService.getPeople()
+  fun getAllPeople(@Name("limit") limit: Int?): List<Person> = starWarsQueryService.getPeople(limit)
 
   @Query
   @Description("Get a person by id")

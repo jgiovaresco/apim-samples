@@ -44,11 +44,17 @@ class StarWarsQueryService {
     people.add(Person(4, "Darth Vader", "41.9BBY", planets[0], listOf(films[0], films[1], films[2], films[5]), listOf(), listOf(starships[2])))
   }
 
-  fun getFilms(): List<Film> = films
+  fun getFilms(limit: Int?): List<Film> {
+    return films.subList(0, limit ?: films.size)
+  }
   fun getFilm(id: Int): Film? = films.find { it.id == id }
-  fun getPlanets(): List<Planet> = planets
+  fun getPlanets(limit: Int?): List<Planet> {
+    return planets.subList(0, limit ?: planets.size)
+  }
   fun getPlanet(id: Int): Planet? = planets.find { it.id == id }
-  fun getPeople(): List<Person> = people
+  fun getPeople(limit: Int?): List<Person> {
+    return people.subList(0, limit ?: people.size)
+  }
   fun getPerson(id: Int): Person? = people.find { it.id == id }
   fun getPersonByFilm(film: Film): List<Person> = people.filter { p -> p.films.any { f -> f.id == film.id } }
   fun getPersonByPlanet(planet: Planet): List<Person> = people.filter { p -> p.homeWorld.id == planet.id }
