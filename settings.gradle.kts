@@ -9,7 +9,7 @@ dependencyResolutionManagement {
       version("avro", "1.11.3")
       version("confluent", "7.5.3")
       version("kotlin-faker", "1.15.0")
-      version("grpc", "1.61.0")
+      version("grpc", "1.61.1")
       version("junit", "5.10.1")
       version("kotlin", "1.9.22")
       version("logback", "1.4.14")
