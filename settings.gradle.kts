@@ -49,7 +49,7 @@ dependencyResolutionManagement {
       bundle("strikt", listOf("strikt-core"))
 
       plugin("axion", "pl.allegro.tech.build.axion-release").version("1.17.0")
-      plugin("docker", "com.palantir.docker").version("0.35.0")
+      plugin("docker", "com.palantir.docker").version("0.36.0")
       plugin("helm", "io.github.bullshit.helmng").version("0.1.0")
       plugin("kotlin-jvm", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
       plugin("kotlin-allopen", "org.jetbrains.kotlin.plugin.allopen").versionRef("kotlin")
