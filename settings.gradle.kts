@@ -19,7 +19,7 @@ dependencyResolutionManagement {
       version("rxjava", "3.1.8")
       version("rxkotlin", "3.0.1")
       version("slf4j", "2.0.13")
-      version("strikt", "0.34.1")
+      version("strikt", "0.35.1")
       version("vertx", "4.3.6")
 
       library("avro", "org.apache.avro", "avro").versionRef("avro")
