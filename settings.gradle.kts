@@ -13,7 +13,7 @@ dependencyResolutionManagement {
       version("junit", "5.10.3")
       version("kotlin", "1.9.24")
       version("logback", "1.5.6")
-      version("mutiny-clients", "3.13.2")
+      version("mutiny-clients", "3.14.0")
       version("protobuf", "3.25.3")
       version("quarkus", "3.12.1")
       version("rxjava", "3.1.8")
