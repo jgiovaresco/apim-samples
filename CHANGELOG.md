@@ -1,3 +1,10 @@
+## [3.3.1](https://github.com/jgiovaresco/apim-samples/compare/3.3.0...3.3.1) (2024-08-07)
+
+
+### Bug Fixes
+
+* **deps:** update protobuf to v4 ([4e37baf](https://github.com/jgiovaresco/apim-samples/commit/4e37baf3caa047641b75e96556845fc99c442f9c))
+
 # [3.3.0](https://github.com/jgiovaresco/apim-samples/compare/3.2.1...3.3.0) (2024-01-29)
 
 
