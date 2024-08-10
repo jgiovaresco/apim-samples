@@ -18,7 +18,7 @@ dependencyResolutionManagement {
       version("quarkus", "3.13.2")
       version("rxjava", "3.1.8")
       version("rxkotlin", "3.0.1")
-      version("slf4j", "2.0.15")
+      version("slf4j", "2.0.16")
       version("strikt", "0.35.1")
       version("vertx", "4.3.6")
 
