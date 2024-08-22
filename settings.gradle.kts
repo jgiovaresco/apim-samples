@@ -11,7 +11,7 @@ dependencyResolutionManagement {
       version("kotlin-faker", "1.16.0")
       version("grpc", "1.66.0")
       version("junit", "5.11.0")
-      version("kotlin", "2.0.10")
+      version("kotlin", "2.0.20")
       version("logback", "1.5.7")
       version("mutiny-clients", "3.14.0")
       version("protobuf", "4.27.3")
