@@ -28,5 +28,5 @@
     "prettier-plugin-packagejson": "2.5.2",
     "semantic-release": "24.1.0"
   },
-  "packageManager": "yarn@4.4.0"
+  "packageManager": "yarn@4.4.1"
 }
