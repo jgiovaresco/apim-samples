@@ -7,7 +7,7 @@
     "lint:commit": "yarn commitlint --from $(git describe --tags --abbrev=0)",
     "lint:prettier": "prettier --check '**/*.{js,json}'",
     "lint:prettier:write": "prettier --write '**/*.{js,json}'",
-    "prepare": "is-ci || husky install"
+    "prepare": "is-ci || husky"
   },
   "lint-staged": {
     "*.js,*.json": [
