@@ -37,6 +37,11 @@ It starts a single http server to handle
 
 This HTTP endpoint can receive HTTP request. It will copy the request received in a 200 response.
 
+You can override the response status code by setting
+
+- the query parameter `statusCode`.
+- or the header `X-Override-Status-Code`.
+
 ==== Example
 
 Using https://httpie.io/cli[httpie]:
