@@ -17,6 +17,7 @@ import io.vertx.kotlin.core.json.obj
 import jakarta.ws.rs.Produces
 import jakarta.ws.rs.core.HttpHeaders
 import jakarta.ws.rs.core.MediaType
+import kotlin.jvm.optionals.getOrNull
 
 @RouteBase(path = "/echo")
 class EchoResource {
@@ -24,6 +25,7 @@ class EchoResource {
   @Route(methods = [Route.HttpMethod.GET, Route.HttpMethod.DELETE, Route.HttpMethod.HEAD, Route.HttpMethod.OPTIONS], path = "", produces = [MediaType.APPLICATION_JSON], order = 1)
   @Produces(MediaType.APPLICATION_JSON)
   fun withoutBody(ctx: RoutingExchange): JsonObject {
+    ctx.response().statusCode = extractStatusCode(ctx)
     return json {
       obj(initResponseBody(ctx))
     }
@@ -34,6 +36,7 @@ class EchoResource {
     val contentType = ctx.request().getHeader(HttpHeaders.CONTENT_TYPE)?.let { ParsableMIMEValue(it).forceParse() }
     val (type, content) = readBody(contentType, requestBody)
 
+    ctx.response().statusCode = extractStatusCode(ctx)
     return json {
       obj(initResponseBody(ctx))
         .put("body", json { obj("type" to type, "content" to content) })
@@ -50,6 +53,13 @@ class EchoResource {
         )
       }.encode()
     )
+  }
+  private fun extractStatusCode(ctx: RoutingExchange): Int {
+    return ctx.getParam("statusCode")
+      .or { ctx.getHeader("X-Override-Status-Code") }
+      .getOrNull()
+      ?.toIntOrNull()
+      ?: 200
   }
 
   private fun initResponseBody(ctx: RoutingExchange) = mutableMapOf(

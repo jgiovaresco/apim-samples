@@ -256,4 +256,60 @@ class EchoResourceTest {
       }
     }
   }
+
+
+  @TestFactory
+  fun `Override response status code`() = listOf(
+    HttpMethod.GET,
+    HttpMethod.DELETE,
+    HttpMethod.OPTIONS,
+    HttpMethod.PUT,
+    HttpMethod.POST,
+  ).map { method ->
+    DynamicTest.dynamicTest("should override status code from query param for $method request") {
+      val response = client
+        .request(method, url.path)
+        .addQueryParam("statusCode", "201")
+        .sendBuffer(Buffer.buffer("message"))
+        .subscribe()
+        .withSubscriber(UniAssertSubscriber.create())
+        .awaitItem()
+        .item
+
+      expectThat(response) {
+        get { statusCode() }.describedAs("statusCode").isEqualTo(201)
+      }
+    }
+
+    DynamicTest.dynamicTest("should override status code from header param for $method request") {
+      val response = client
+        .request(method, url.path)
+        .putHeader("X-Override-Status-Code", "202")
+        .sendBuffer(Buffer.buffer("message"))
+        .subscribe()
+        .withSubscriber(UniAssertSubscriber.create())
+        .awaitItem()
+        .item
+
+      expectThat(response) {
+        get { statusCode() }.describedAs("statusCode").isEqualTo(202)
+      }
+    }
+
+    DynamicTest.dynamicTest("should fallback to 200 status code when overridden status is incorrect for $method request") {
+      val response = client
+        .request(method, url.path)
+        .addQueryParam("statusCode", "unknown")
+        .putHeader("X-Override-Status-Code", "other")
+        .sendBuffer(Buffer.buffer("message"))
+        .subscribe()
+        .withSubscriber(UniAssertSubscriber.create())
+        .awaitItem()
+        .item
+
+      expectThat(response) {
+        get { statusCode() }.describedAs("statusCode").isEqualTo(200)
+      }
+    }
+  }
 }
