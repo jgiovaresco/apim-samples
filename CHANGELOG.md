@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/jgiovaresco/apim-samples/compare/3.3.1...3.4.0) (2025-01-21)
+
+
+### Features
+
+* override echo response status with query param or header ([ae37c7f](https://github.com/jgiovaresco/apim-samples/commit/ae37c7f98969b4ae37b8fa6ebcb8254ac14ce6da))
+
 ## [3.3.1](https://github.com/jgiovaresco/apim-samples/compare/3.3.0...3.3.1) (2024-08-07)
 
 
