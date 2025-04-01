@@ -53,7 +53,7 @@ dependencyResolutionManagement {
       plugin("helm", "io.github.bullshit.helmng").version("0.1.0")
       plugin("kotlin-jvm", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
       plugin("kotlin-allopen", "org.jetbrains.kotlin.plugin.allopen").versionRef("kotlin")
-      plugin("protobuf", "com.google.protobuf").version("0.9.4")
+      plugin("protobuf", "com.google.protobuf").version("0.9.5")
       plugin("quarkus", "io.quarkus").versionRef("quarkus")
       plugin("shadow", "com.github.johnrengelman.shadow").version("8.1.1")
     }
