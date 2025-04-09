@@ -1,4 +1,5 @@
 import com.palantir.gradle.docker.DockerExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
   alias(libs.plugins.axion)
@@ -31,6 +32,7 @@ dependencies {
   implementation(enforcedPlatform(libs.quarkus.bom))
   implementation(enforcedPlatform(libs.mutiny.clients.bom))
 
+  implementation(libs.bundles.grpc)
   implementation(libs.avro)
   implementation(libs.kafka.serializer.avro)
   implementation(libs.kotlin.faker)
@@ -63,6 +65,13 @@ java {
   targetCompatibility = JavaVersion.VERSION_17
 }
 
+kotlin {
+  compilerOptions {
+    jvmTarget = JvmTarget.JVM_17
+    javaParameters = true
+  }
+}
+
 allOpen {
   annotation("javax.ws.rs.Path")
   annotation("javax.enterprise.context.ApplicationScoped")
@@ -71,11 +80,6 @@ allOpen {
 
 tasks.withType<Test> {
   systemProperty("java.util.logging.manager", "org.jboss.logmanager.LogManager")
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-  kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
-  kotlinOptions.javaParameters = true
 }
 
 tasks.register("copyProto", Copy::class.java) {
