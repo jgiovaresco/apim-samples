@@ -4,3 +4,4 @@ version: 3.4.0
 appVersion: "3.4.0"
 description: A Helm chart to deploy apim-samples in Kubernetes
 type: application
+icon: "https://raw.githubusercontent.com/jgiovaresco/apim-samples/refs/heads/main/helm/src/main/helm/favicon.png"
