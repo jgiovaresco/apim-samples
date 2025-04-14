@@ -2,7 +2,6 @@ import com.palantir.gradle.docker.DockerExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-  alias(libs.plugins.axion)
   alias(libs.plugins.docker)
   alias(libs.plugins.kotlin.allopen)
   alias(libs.plugins.kotlin.jvm)
@@ -20,13 +19,6 @@ repositories {
     }
   }
 }
-
-scmVersion {
-  tag {
-    prefix.set("")
-  }
-}
-project.version = scmVersion.version
 
 dependencies {
   implementation(enforcedPlatform(libs.quarkus.bom))
