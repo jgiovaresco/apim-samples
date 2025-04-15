@@ -1,3 +1,12 @@
+## [3.4.1](https://github.com/jgiovaresco/apim-samples/compare/3.4.0...3.4.1) (2025-04-15)
+
+
+### Bug Fixes
+
+* **helm:** align the version of the chart with the project release ([941c80f](https://github.com/jgiovaresco/apim-samples/commit/941c80fd76aa1b3761bdec06cf98fc56746f8f5d))
+* **helm:** define an icon for the chart ([85ddaad](https://github.com/jgiovaresco/apim-samples/commit/85ddaada1bf88285f23f11db7e20398de254b278))
+* **helm:** fix http ingress ([acd0ba9](https://github.com/jgiovaresco/apim-samples/commit/acd0ba928e7be1ebeb9a5a9d4aea301525e04d7b))
+
 # [3.4.0](https://github.com/jgiovaresco/apim-samples/compare/3.3.1...3.4.0) (2025-01-21)
 
 
