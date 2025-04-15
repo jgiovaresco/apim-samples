@@ -1,3 +1,10 @@
+# [3.5.0](https://github.com/jgiovaresco/apim-samples/compare/3.4.1...3.5.0) (2025-04-15)
+
+
+### Features
+
+* add a sse endpoint ([0529433](https://github.com/jgiovaresco/apim-samples/commit/0529433cca494ad7f592ba726423d794771873ff))
+
 ## [3.4.1](https://github.com/jgiovaresco/apim-samples/compare/3.4.0...3.4.1) (2025-04-15)
 
 
