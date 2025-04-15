@@ -142,3 +142,11 @@ will respond
 === GraphQL
 
 The application provides a GraphQL endpoint. It exposes the schema through http://localhost:8888/graphql/schema.graphql
+
+=== SSE
+
+The endpoint `/sse/quotes` will send SSE events every second indefinitely. You can stop the stream by closing the connection.
+
+You can provide a query parameter `delayInMs` to customize the delay between events. The value is in milliseconds.
+
+You can provide a query parameter `nbMessages` to customize the number of messages sent. The connection will be closed after the number of messages sent.
