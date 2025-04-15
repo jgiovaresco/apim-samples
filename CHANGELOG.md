@@ -1,3 +1,10 @@
+## [3.5.1](https://github.com/jgiovaresco/apim-samples/compare/3.5.0...3.5.1) (2025-04-15)
+
+
+### Bug Fixes
+
+* exclude probes calls from access-log ([f516687](https://github.com/jgiovaresco/apim-samples/commit/f516687c2f9fad053feff94b1bcf896232168c4d))
+
 # [3.5.0](https://github.com/jgiovaresco/apim-samples/compare/3.4.1...3.5.0) (2025-04-15)
 
 
