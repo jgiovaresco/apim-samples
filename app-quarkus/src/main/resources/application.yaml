@@ -4,6 +4,7 @@ quarkus:
     port: 8888
     access-log:
       enabled: true
+      exclude-pattern: "/q/health/.*"
 
   grpc:
     server:
