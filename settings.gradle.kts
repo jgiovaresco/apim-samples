@@ -48,7 +48,7 @@ dependencyResolutionManagement {
       bundle("rx", listOf("rxjava3", "rxkotlin"))
       bundle("strikt", listOf("strikt-core"))
 
-      plugin("axion", "pl.allegro.tech.build.axion-release").version("1.20.0")
+      plugin("axion", "pl.allegro.tech.build.axion-release").version("1.20.1")
       plugin("docker", "com.palantir.docker").version("0.36.0")
       plugin("helm", "com.citi.helm").version("2.2.0")
       plugin("kotlin-jvm", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
