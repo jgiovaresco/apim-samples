@@ -15,7 +15,7 @@ dependencyResolutionManagement {
       version("logback", "1.5.18")
       version("mutiny-clients", "3.19.2")
       version("protobuf", "4.32.0")
-      version("quarkus", "3.26.1")
+      version("quarkus", "3.26.2")
       version("rxjava", "3.1.11")
       version("rxkotlin", "3.0.1")
       version("slf4j", "2.0.17")
