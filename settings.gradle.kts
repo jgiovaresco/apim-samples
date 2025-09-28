@@ -7,7 +7,7 @@ dependencyResolutionManagement {
     create("libs") {
       version("annotation-api", "1.3.2")
       version("avro", "1.12.0")
-      version("confluent", "7.9.2")
+      version("confluent", "7.9.3")
       version("kotlin-faker", "1.16.0")
       version("grpc", "1.75.0")
       version("junit", "5.13.4")
