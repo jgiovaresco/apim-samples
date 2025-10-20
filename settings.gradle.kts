@@ -12,7 +12,7 @@ dependencyResolutionManagement {
       version("grpc", "1.76.0")
       version("junit", "5.14.0")
       version("kotlin", "2.2.20")
-      version("logback", "1.5.19")
+      version("logback", "1.5.20")
       version("mutiny-clients", "3.20.0")
       version("protobuf", "4.33.0")
       version("quarkus", "3.28.4")
