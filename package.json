@@ -25,7 +25,7 @@
     "lint-staged": "16.2.7",
     "pinst": "3.0.0",
     "prettier": "3.7.4",
-    "prettier-plugin-packagejson": "2.5.20",
+    "prettier-plugin-packagejson": "2.5.22",
     "semantic-release": "25.0.2"
   },
   "packageManager": "yarn@4.12.0"
