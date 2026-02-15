@@ -42,6 +42,11 @@ You can override the response status code by setting
 - the query parameter `statusCode`.
 - or the header `X-Override-Status-Code`.
 
+You can add a delay before the response by setting (in milliseconds)
+
+- the query parameter `delay`.
+- or the header `X-Delay` (takes precedence over query parameter).
+
 ==== Example
 
 Using https://httpie.io/cli[httpie]:
@@ -71,6 +76,16 @@ will respond
         "qs": "value"
     }
 }
+----
+
+To add a 1 second delay using query parameter:
+----
+http GET http://localhost:8888/echo\?delay\=1000
+----
+
+To add a 2 second delay using header:
+----
+http GET http://localhost:8888/echo X-Delay:2000
 ----
 
 === WebSocket /ws/echo
