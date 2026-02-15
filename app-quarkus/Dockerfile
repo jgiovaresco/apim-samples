@@ -57,7 +57,7 @@
 #   accessed directly. (example: "foo.example.com,bar.example.com")
 #
 ###
-FROM eclipse-temurin:25.0.1_8-jre-alpine AS builder
+FROM eclipse-temurin:25.0.2_10-jre-alpine AS builder
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
 
@@ -81,7 +81,7 @@ COPY --chown=guest:users ./*.jar /quarkus-app/
 COPY --chown=guest:users ./lib/ /quarkus-app/lib/
 COPY --chown=guest:users ./app/ /quarkus-app/app/
 
-FROM eclipse-temurin:25.0.1_8-jre-alpine
+FROM eclipse-temurin:25.0.2_10-jre-alpine
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
 
