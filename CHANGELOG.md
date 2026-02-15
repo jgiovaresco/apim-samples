@@ -1,3 +1,18 @@
+# [3.6.0](https://github.com/jgiovaresco/apim-samples/compare/3.5.1...3.6.0) (2026-02-15)
+
+
+### Bug Fixes
+
+* **deps:** update logback monorepo to v1.5.31 ([dcf4d8a](https://github.com/jgiovaresco/apim-samples/commit/dcf4d8ad28e61299dfad8206db150b89d075b8a4))
+* **deps:** update protobuf monorepo to v4.33.5 ([3720812](https://github.com/jgiovaresco/apim-samples/commit/3720812463c8d31c8fad1aba7baaa47ef5dd6898))
+* **deps:** update quarkus to v3.31.3 ([7e9ce93](https://github.com/jgiovaresco/apim-samples/commit/7e9ce93c63b0d7d7043e09c0afaf093457a7a414))
+
+
+### Features
+
+* **helm:** define container's lifecyle ([de9ceb7](https://github.com/jgiovaresco/apim-samples/commit/de9ceb751fe4dc69728f10ee27280bd4c9c04ed9))
+* introduce configurable response delay in Echo resource ([e059222](https://github.com/jgiovaresco/apim-samples/commit/e05922274e576d66f0914c68fc04d93764fd2d34))
+
 ## [3.5.1](https://github.com/jgiovaresco/apim-samples/compare/3.5.0...3.5.1) (2025-04-15)
 
 
