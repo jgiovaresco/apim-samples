@@ -42,6 +42,10 @@ spec:
 {{- end }}
           livenessProbe: {{ toYaml .Values.probes.liveness | nindent 12 }}
           readinessProbe: {{ toYaml .Values.probes.readiness | nindent 12 }}
+          {{- if .Values.lifecycle }}
+          lifecycle:
+            {{- toYaml .Values.lifecycle | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
