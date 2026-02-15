@@ -20,7 +20,6 @@ dependencyResolutionManagement {
       version("rxkotlin", "3.0.1")
       version("slf4j", "2.0.17")
       version("strikt", "0.35.1")
-      version("vertx", "4.3.6")
 
       library("avro", "org.apache.avro", "avro").versionRef("avro")
       library("grpc-protobuf", "io.grpc", "grpc-protobuf").versionRef("grpc")
