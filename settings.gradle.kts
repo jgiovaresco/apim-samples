@@ -10,7 +10,7 @@ dependencyResolutionManagement {
       version("confluent", "7.9.5")
       version("kotlin-faker", "1.16.0")
       version("grpc", "1.79.0")
-      version("junit", "5.14.3")
+      version("junit", "6.0.3")
       version("kotlin", "2.3.10")
       version("logback", "1.5.31")
       version("mutiny-clients", "3.21.4")
