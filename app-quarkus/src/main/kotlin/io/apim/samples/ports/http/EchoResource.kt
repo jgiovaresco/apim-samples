@@ -25,6 +25,10 @@ class EchoResource {
   @Route(methods = [Route.HttpMethod.GET, Route.HttpMethod.DELETE, Route.HttpMethod.HEAD, Route.HttpMethod.OPTIONS], path = "", produces = [MediaType.APPLICATION_JSON], order = 1)
   @Produces(MediaType.APPLICATION_JSON)
   fun withoutBody(ctx: RoutingExchange): JsonObject {
+    val delay = extractDelay(ctx)
+    if (delay > 0) {
+      Thread.sleep(delay)
+    }
     ctx.response().statusCode = extractStatusCode(ctx)
     return json {
       obj(initResponseBody(ctx))
@@ -33,6 +37,10 @@ class EchoResource {
 
   @Route(methods = [Route.HttpMethod.POST, Route.HttpMethod.PUT], path = "", produces = [MediaType.APPLICATION_JSON], order = 2)
   fun withBody(@Body requestBody: Buffer, ctx: RoutingExchange): JsonObject {
+    val delay = extractDelay(ctx)
+    if (delay > 0) {
+      Thread.sleep(delay)
+    }
     val contentType = ctx.request().getHeader(HttpHeaders.CONTENT_TYPE)?.let { ParsableMIMEValue(it).forceParse() }
     val (type, content) = readBody(contentType, requestBody)
 
@@ -60,6 +68,14 @@ class EchoResource {
       .getOrNull()
       ?.toIntOrNull()
       ?: 200
+  }
+
+  private fun extractDelay(ctx: RoutingExchange): Long {
+    return ctx.getHeader("X-Delay")
+      .or { ctx.getParam("delay") }
+      .getOrNull()
+      ?.toLongOrNull()
+      ?: 0
   }
 
   private fun initResponseBody(ctx: RoutingExchange) = mutableMapOf(

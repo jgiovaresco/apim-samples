@@ -20,6 +20,8 @@ import org.junit.jupiter.api.TestFactory
 import strikt.api.expectThat
 import strikt.assertions.contains
 import strikt.assertions.isEqualTo
+import strikt.assertions.isGreaterThanOrEqualTo
+import strikt.assertions.isLessThanOrEqualTo
 import strikt.assertions.isNotNull
 import strikt.assertions.isNull
 import java.net.URL
@@ -310,6 +312,88 @@ class EchoResourceTest {
       expectThat(response) {
         get { statusCode() }.describedAs("statusCode").isEqualTo(200)
       }
+    }
+  }
+
+  @TestFactory
+  fun `Delay response`() = listOf(
+    HttpMethod.GET,
+    HttpMethod.DELETE,
+    HttpMethod.OPTIONS,
+    HttpMethod.PUT,
+    HttpMethod.POST,
+  ).map { method ->
+    DynamicTest.dynamicTest("should delay response from query param for $method request") {
+      val startTime = System.currentTimeMillis()
+      val response = client
+        .request(method, url.path)
+        .addQueryParam("delay", "500")
+        .sendBuffer(Buffer.buffer("message"))
+        .subscribe()
+        .withSubscriber(UniAssertSubscriber.create())
+        .awaitItem()
+        .item
+      val duration = System.currentTimeMillis() - startTime
+
+      expectThat(response) {
+        get { statusCode() }.describedAs("statusCode").isEqualTo(200)
+      }
+      expectThat(duration).describedAs("duration").isGreaterThanOrEqualTo(400L).isLessThanOrEqualTo(600L)
+    }
+
+    DynamicTest.dynamicTest("should delay response from header param for $method request") {
+      val startTime = System.currentTimeMillis()
+      val response = client
+        .request(method, url.path)
+        .putHeader("X-Delay", "500")
+        .sendBuffer(Buffer.buffer("message"))
+        .subscribe()
+        .withSubscriber(UniAssertSubscriber.create())
+        .awaitItem()
+        .item
+      val duration = System.currentTimeMillis() - startTime
+
+      expectThat(response) {
+        get { statusCode() }.describedAs("statusCode").isEqualTo(200)
+      }
+      expectThat(duration).describedAs("duration").isGreaterThanOrEqualTo(400L).isLessThanOrEqualTo(600L)
+    }
+
+    DynamicTest.dynamicTest("should prioritize header over query param for delay for $method request") {
+      val startTime = System.currentTimeMillis()
+      val response = client
+        .request(method, url.path)
+        .putHeader("X-Delay", "300")
+        .addQueryParam("delay", "1000")
+        .sendBuffer(Buffer.buffer("message"))
+        .subscribe()
+        .withSubscriber(UniAssertSubscriber.create())
+        .awaitItem()
+        .item
+      val duration = System.currentTimeMillis() - startTime
+
+      expectThat(response) {
+        get { statusCode() }.describedAs("statusCode").isEqualTo(200)
+      }
+      expectThat(duration).describedAs("duration").isGreaterThanOrEqualTo(200L).isLessThanOrEqualTo(400L)
+    }
+
+    DynamicTest.dynamicTest("should not delay when delay value is invalid for $method request") {
+      val startTime = System.currentTimeMillis()
+      val response = client
+        .request(method, url.path)
+        .addQueryParam("delay", "invalid")
+        .sendBuffer(Buffer.buffer("message"))
+        .subscribe()
+        .withSubscriber(UniAssertSubscriber.create())
+        .awaitItem()
+        .item
+      val duration = System.currentTimeMillis() - startTime
+
+      expectThat(response) {
+        get { statusCode() }.describedAs("statusCode").isEqualTo(200)
+      }
+      expectThat(duration).describedAs("duration").isLessThanOrEqualTo(100L)
     }
   }
 }
