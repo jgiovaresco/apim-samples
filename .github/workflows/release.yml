@@ -44,7 +44,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build docker --scan
       - name: Upload build reports
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: build-reports
           path: build/reports/
