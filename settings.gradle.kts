@@ -18,7 +18,7 @@ dependencyResolutionManagement {
       version("quarkus", "3.35.2")
       version("rxjava", "3.1.12")
       version("rxkotlin", "3.0.1")
-      version("slf4j", "2.0.17")
+      version("slf4j", "2.0.18")
       version("strikt", "0.35.1")
 
       library("avro", "org.apache.avro", "avro").versionRef("avro")
